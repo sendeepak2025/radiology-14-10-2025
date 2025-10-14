@@ -1499,13 +1499,57 @@ export class VTKVolumeRenderer {
             // Connect mapper to volume
             this.volume.setMapper(this.volumeMapper)
             
+            // Set up a default visible transfer function immediately
+            // This ensures volume is visible even before explicit setTransferFunction call
+            const volumeProperty = this.volume.getProperty()
+            
+            // Get data range from imageData
+            const dataRange = this.imageData.getPointData().getScalars().getRange()
+            const minValue = dataRange[0]
+            const maxValue = dataRange[1]
+            
+            console.log(`📊 Data range: [${minValue}, ${maxValue}]`)
+            
+            // Create default opacity function (more visible than typical presets)
+            const defaultOpacity = vtkPiecewiseFunction.newInstance()
+            this.resources.push(defaultOpacity)
+            defaultOpacity.addPoint(minValue, 0.0)
+            defaultOpacity.addPoint(minValue + (maxValue - minValue) * 0.2, 0.0)
+            defaultOpacity.addPoint(minValue + (maxValue - minValue) * 0.4, 0.3)
+            defaultOpacity.addPoint(minValue + (maxValue - minValue) * 0.6, 0.6)
+            defaultOpacity.addPoint(maxValue, 0.9)
+            
+            // Create default color function (grayscale)
+            const defaultColor = vtkColorTransferFunction.newInstance()
+            this.resources.push(defaultColor)
+            defaultColor.addRGBPoint(minValue, 0.0, 0.0, 0.0)
+            defaultColor.addRGBPoint(minValue + (maxValue - minValue) * 0.5, 0.5, 0.5, 0.5)
+            defaultColor.addRGBPoint(maxValue, 1.0, 1.0, 1.0)
+            
+            // Apply default transfer functions
+            volumeProperty.setRGBTransferFunction(0, defaultColor)
+            volumeProperty.setScalarOpacity(0, defaultOpacity)
+            
+            // Enable shading for better visualization
+            volumeProperty.setShade(true)
+            volumeProperty.setAmbient(0.3)
+            volumeProperty.setDiffuse(0.7)
+            volumeProperty.setSpecular(0.3)
+            volumeProperty.setSpecularPower(8.0)
+            
+            // Set interpolation type
+            volumeProperty.setInterpolationTypeToLinear()
+            
             // Add volume to renderer
             this.renderer.addVolume(this.volume)
             
             // Reset camera to fit volume
             this.renderer.resetCamera()
             
-            console.log('✅ Volume mapper configured')
+            // Force an initial render
+            this.render()
+            
+            console.log('✅ Volume mapper configured with default transfer function')
             
         } catch (error) {
             console.error('❌ Failed to setup volume mapper:', error)
