@@ -321,9 +321,18 @@ async function mapGlobalIndexToInstance(instances, globalIndex) {
       continue;
     }
     try {
-      // download minimal bytes — entire file for now (could optimize with range requests)
-      const resp = await axios.get(url, { responseType: 'arraybuffer' });
-      const buf = Buffer.from(resp.data);
+      // Read DICOM file - either from filesystem or HTTP
+      let buf;
+      if (url.startsWith('file://')) {
+        // Read from local filesystem
+        const filePath = url.replace('file://', '');
+        buf = fs.readFileSync(filePath);
+      } else {
+        // Download from HTTP/HTTPS (Cloudinary, etc.)
+        const resp = await axios.get(url, { responseType: 'arraybuffer' });
+        buf = Buffer.from(resp.data);
+      }
+      
       const meta = parseMetaFromBuffer(buf);
       const frames = meta.numberOfFrames || 1;
       if (globalIndex < acc + frames) {
