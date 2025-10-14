@@ -13,6 +13,9 @@ async function connectMongo(uri, retries = 3) {
   
   mongoose.set('strictQuery', true);
   
+  // Detect if connecting to local MongoDB or Atlas
+  const isLocalMongo = uri.includes('127.0.0.1') || uri.includes('localhost');
+  
   const options = {
     serverSelectionTimeoutMS: 10000, // 10 seconds
     socketTimeoutMS: 45000, // 45 seconds
@@ -20,11 +23,17 @@ async function connectMongo(uri, retries = 3) {
     minPoolSize: 2,
     retryWrites: true,
     retryReads: true,
-    // TLS/SSL options for MongoDB Atlas
-    tls: true,
-    tlsAllowInvalidCertificates: false,
-    tlsAllowInvalidHostnames: false,
   };
+  
+  // Only enable TLS for remote MongoDB (e.g., Atlas)
+  if (!isLocalMongo) {
+    options.tls = true;
+    options.tlsAllowInvalidCertificates = false;
+    options.tlsAllowInvalidHostnames = false;
+    console.log('   Using TLS for remote MongoDB connection');
+  } else {
+    console.log('   Connecting to local MongoDB without TLS');
+  }
 
   let lastError;
   
