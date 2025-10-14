@@ -33,9 +33,14 @@ async function fixInstanceFilePaths() {
 
         if (fs.existsSync(expectedPath)) {
           instance.filePath = expectedPath;
-          await instance.save();
-          fixedCount++;
-          console.log(`  ✅ Fixed: ${sopUID.substring(0, 30)}...`);
+          instance.markModified('filePath'); // Force Mongoose to recognize the change
+          const saved = await instance.save();
+          if (saved.filePath === expectedPath) {
+            fixedCount++;
+            console.log(`  ✅ Fixed: ${sopUID.substring(0, 30)}...`);
+          } else {
+            console.log(`  ❌ Save failed: ${sopUID.substring(0, 30)}...`);
+          }
         } else {
           console.log(`  ⚠️  File not found: ${expectedPath}`);
           notFoundCount++;
