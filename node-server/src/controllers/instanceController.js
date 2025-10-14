@@ -24,13 +24,25 @@ function generatePlaceholderPng(width = 256, height = 256) {
   return PNG.sync.write(png);
 }
 
-// Helper: resolve Cloudinary raw URL for an instance
+// Helper: resolve DICOM file URL/path for an instance
 function resolveDicomUrl(inst) {
   if (!inst) return null;
+  
+  // Priority 1: Local filesystem path (preferred for performance)
+  if (inst.filePath) {
+    // Return as file:// URL for consistency
+    const absolutePath = path.isAbsolute(inst.filePath) 
+      ? inst.filePath 
+      : path.resolve(__dirname, '../../', inst.filePath);
+    return `file://${absolutePath}`;
+  }
+  
+  // Priority 2: Cloudinary URL
   if (inst.cloudinaryUrl) return inst.cloudinaryUrl;
   if (inst.cloudinaryPublicId) {
     return cloudinary.url(inst.cloudinaryPublicId, { resource_type: 'raw', secure: true });
   }
+  
   return null;
 }
 
