@@ -589,10 +589,20 @@ export const MedicalImageViewer: React.FC<MedicalImageViewerProps> = ({
 
       if (!img) {
         img = new Image()
-        img.src = frameUrls[frameIndex]
+        img.crossOrigin = 'anonymous' // Enable CORS
+        const url = frameUrls[frameIndex]
+        console.log(`🔍 Loading frame ${frameIndex} from:`, url)
+        img.src = url
         await new Promise((resolve, reject) => {
-          img!.onload = resolve
-          img!.onerror = reject
+          img!.onload = () => {
+            console.log(`✅ Frame ${frameIndex} loaded successfully:`, img!.width, 'x', img!.height)
+            resolve(null)
+          }
+          img!.onerror = (error) => {
+            console.error(`❌ Frame ${frameIndex} failed to load from:`, url, error)
+            console.error('Image naturalWidth:', img!.naturalWidth, 'naturalHeight:', img!.naturalHeight)
+            reject(new Error(`Failed to load frame ${frameIndex}`))
+          }
         })
         imageCache.current.set(frameIndex, img)
       }
