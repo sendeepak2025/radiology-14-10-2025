@@ -1784,6 +1784,9 @@ export class VTKVolumeRenderer {
         }
         
         console.log('🎨 Applying transfer function...')
+        console.log(`   Volume range: [${volumeMin}, ${volumeMax}]`)
+        console.log(`   Opacity points: ${transferFunction.opacityPoints.length}`)
+        console.log(`   Color points: ${transferFunction.colorPoints.length}`)
         
         try {
             // Get volume property
@@ -1797,6 +1800,7 @@ export class VTKVolumeRenderer {
             transferFunction.opacityPoints.forEach(point => {
                 const value = volumeMin + point.value * (volumeMax - volumeMin)
                 opacityFunction.addPoint(value, point.opacity)
+                console.log(`   Opacity: ${value.toFixed(2)} → ${point.opacity}`)
             })
             
             // Create color transfer function
@@ -1807,6 +1811,7 @@ export class VTKVolumeRenderer {
             transferFunction.colorPoints.forEach(point => {
                 const value = volumeMin + point.value * (volumeMax - volumeMin)
                 colorFunction.addRGBPoint(value, point.r, point.g, point.b)
+                console.log(`   Color: ${value.toFixed(2)} → RGB(${point.r}, ${point.g}, ${point.b})`)
             })
             
             // Apply transfer functions to volume property
@@ -1823,7 +1828,7 @@ export class VTKVolumeRenderer {
             // Trigger re-render
             this.render()
             
-            console.log('✅ Transfer function applied')
+            console.log('✅ Transfer function applied successfully')
             
         } catch (error) {
             console.error('❌ Failed to set transfer function:', error)
