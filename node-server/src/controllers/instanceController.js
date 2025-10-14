@@ -154,23 +154,76 @@ function getFrameView(dataSet, meta, frameIndex) {
       frameBytes = dicomParser.readEncapsulatedPixelDataFromFragments(dataSet, pixelDataElement, frameIndex);
     }
 
-    // Decode JPEG bytes -> RGBA, then convert to RGB view
-    const decoded = jpeg.decode(Buffer.from(frameBytes), { useTArray: true });
-    const { data, width, height } = decoded; // RGBA
-    const rgb = new Uint8Array(width * height * 3);
-    for (let i = 0, j = 0; i < data.length; i += 4, j += 3) {
-      rgb[j] = data[i];
-      rgb[j + 1] = data[i + 1];
-      rgb[j + 2] = data[i + 2];
+    // Decode JPEG bytes -> RGBA/RGB
+    let decoded, width, height, data;
+    
+    try {
+      // Try standard JPEG first
+      decoded = jpeg.decode(Buffer.from(frameBytes), { useTArray: true });
+      data = decoded.data; // RGBA
+      width = decoded.width;
+      height = decoded.height;
+      
+      // Convert RGBA to RGB
+      const rgb = new Uint8Array(width * height * 3);
+      for (let i = 0, j = 0; i < data.length; i += 4, j += 3) {
+        rgb[j] = data[i];
+        rgb[j + 1] = data[i + 1];
+        rgb[j + 2] = data[i + 2];
+      }
+      
+      // Update meta to reflect decoded frame
+      meta.samplesPerPixel = 3;
+      meta.bitsAllocated = 8;
+      meta.rows = height;
+      meta.cols = width;
+      
+      return rgb;
+      
+    } catch (jpegError) {
+      // Try JPEG-LS decoder for advanced JPEG formats
+      console.log('⚠️  Standard JPEG failed, trying JPEG-LS decoder...');
+      try {
+        const decoder = new jpegLossless.Decoder();
+        const decodedLS = decoder.decode(Buffer.from(frameBytes));
+        
+        // JPEG-LS returns raw pixel data
+        width = decodedLS.width || meta.cols;
+        height = decodedLS.height || meta.rows;
+        const pixelData = new Uint8Array(decodedLS.buffer || decodedLS);
+        
+        // Determine if grayscale or RGB
+        const samplesPerPixel = pixelData.length / (width * height);
+        
+        if (samplesPerPixel === 1) {
+          // Grayscale - convert to RGB
+          const rgb = new Uint8Array(width * height * 3);
+          for (let i = 0, j = 0; i < pixelData.length; i++, j += 3) {
+            rgb[j] = pixelData[i];
+            rgb[j + 1] = pixelData[i];
+            rgb[j + 2] = pixelData[i];
+          }
+          meta.samplesPerPixel = 3;
+          meta.bitsAllocated = 8;
+          meta.rows = height;
+          meta.cols = width;
+          console.log('✅ JPEG-LS decoded successfully (grayscale → RGB)');
+          return rgb;
+        } else {
+          // Already RGB
+          meta.samplesPerPixel = 3;
+          meta.bitsAllocated = 8;
+          meta.rows = height;
+          meta.cols = width;
+          console.log('✅ JPEG-LS decoded successfully (RGB)');
+          return pixelData;
+        }
+        
+      } catch (losslessError) {
+        console.error('❌ Both JPEG and JPEG-LS decoding failed:', losslessError.message);
+        throw new Error(`Failed to decode compressed pixel data: ${jpegError.message} / ${losslessError.message}`);
+      }
     }
-
-    // Update meta to reflect decoded frame
-    meta.samplesPerPixel = 3;
-    meta.bitsAllocated = 8;
-    meta.rows = height;
-    meta.cols = width;
-
-    return rgb;
   }
 
   // Calculate bytes per pixel and frame precisely
