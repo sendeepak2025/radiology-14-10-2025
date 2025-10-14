@@ -61,31 +61,35 @@ export async function createVolumeFromFrames(
 
     console.log(`✅ All ${images.length} images loaded successfully`)
 
-    let width = images[0].width
-    let height = images[0].height
-    let depth = images.length
+    const originalWidth = images[0].width
+    const originalHeight = images[0].height
+    const originalDepth = images.length
 
-    console.log(`📐 Original volume dimensions: ${width}x${height}x${depth}`)
+    console.log(`📐 Original volume dimensions: ${originalWidth}x${originalHeight}x${originalDepth}`)
 
     // Calculate memory requirements
-    const originalSize = width * height * depth
+    const originalSize = originalWidth * originalHeight * originalDepth
     const memoryMB = (originalSize * 4) / (1024 * 1024) // Float32 = 4 bytes
     console.log(`💾 Estimated memory: ${memoryMB.toFixed(2)}MB`)
 
-    // Downsample if memory exceeds browser limits (~200MB)
-    let downsampleFactor = 1
+    // Determine if downsampling needed
+    let processedImages = images
+    let width = originalWidth
+    let height = originalHeight
+    let depth = originalDepth
+    
     const MAX_MEMORY_MB = 180 // Safe limit below browser's ~200MB
     
     if (memoryMB > MAX_MEMORY_MB) {
       // Calculate downsample factor to stay under limit
-      downsampleFactor = Math.ceil(Math.sqrt(memoryMB / MAX_MEMORY_MB))
+      const downsampleFactor = Math.ceil(Math.sqrt(memoryMB / MAX_MEMORY_MB))
       console.warn(`⚠️  Volume too large (${memoryMB.toFixed(2)}MB), downsampling by factor ${downsampleFactor}`)
       
       // Downsample images
       const downsampledImages: HTMLImageElement[] = []
-      const newWidth = Math.floor(width / downsampleFactor)
-      const newHeight = Math.floor(height / downsampleFactor)
-      const newDepth = Math.floor(depth / downsampleFactor)
+      const newWidth = Math.floor(originalWidth / downsampleFactor)
+      const newHeight = Math.floor(originalHeight / downsampleFactor)
+      const newDepth = Math.floor(originalDepth / downsampleFactor)
       
       for (let i = 0; i < newDepth; i++) {
         const originalIndex = i * downsampleFactor
@@ -104,7 +108,7 @@ export async function createVolumeFromFrames(
         }
       }
       
-      images = downsampledImages
+      processedImages = downsampledImages
       width = newWidth
       height = newHeight
       depth = newDepth
