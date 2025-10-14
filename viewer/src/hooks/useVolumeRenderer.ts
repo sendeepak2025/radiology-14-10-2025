@@ -219,6 +219,17 @@ export function useVolumeRenderer({
             })
           }
           
+          // Apply default transfer function after loading (CRITICAL for visibility!)
+          console.log('🎨 Applying default transfer function...')
+          vtkRendererRef.current.setTransferFunction(
+            transferFunction,
+            volumeData.min,
+            volumeData.max
+          )
+          
+          // Set render mode
+          vtkRendererRef.current.setRenderMode('volume')
+          
           // Reset camera to view volume
           vtkRendererRef.current.resetCamera()
           
