@@ -521,10 +521,10 @@ export function useVolumeRenderer({
     const tf = TRANSFER_FUNCTIONS[preset]
     setTransferFunction(tf)
     
-    if (rendererType === 'vtk' && vtkRendererRef.current) {
-      vtkRendererRef.current.setTransferFunction(tf)
+    if (rendererType === 'vtk' && vtkRendererRef.current && volume) {
+      vtkRendererRef.current.setTransferFunction(tf, volume.min, volume.max)
     }
-  }, [rendererType])
+  }, [rendererType, volume])
   
   // Update opacity (unified for both renderers)
   const setOpacity = useCallback((opacity: number) => {
