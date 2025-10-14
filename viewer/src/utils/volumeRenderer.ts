@@ -132,7 +132,7 @@ export async function createVolumeFromFrames(
         canvas.height = height
         const ctx = canvas.getContext('2d')!
 
-        ctx.drawImage(images[z], 0, 0)
+        ctx.drawImage(processedImages[z], 0, 0)
         const imageData = ctx.getImageData(0, 0, width, height)
         const pixels = imageData.data
 
