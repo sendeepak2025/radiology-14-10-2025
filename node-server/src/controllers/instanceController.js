@@ -7,6 +7,7 @@ const Instance = require('../models/Instance');
 const dicomParser = require("dicom-parser");
 const jpeg = require('jpeg-js');
 const dicomRLE = require('dicom-rle');
+const jpegLossless = require('jpeg-lossless-decoder-js');
 
 // Generate a simple placeholder if DICOM or frame extraction fails
 function generatePlaceholderPng(width = 256, height = 256) {
