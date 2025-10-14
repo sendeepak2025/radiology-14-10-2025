@@ -1134,11 +1134,16 @@ export class VTKVolumeRenderer {
             // Estimate GPU memory usage
             this.estimateGPUMemory()
             
-            // Set up volume mapper and actor
+            // Set up volume mapper and actor (includes default transfer function)
             this.setupVolumeMapper()
+            
+            // Force another render to ensure volume is displayed
+            this.render()
             
             // Save volume data for potential reload after context loss
             this.lastVolumeData = volumeData
+            
+            console.log('✅ Volume fully initialized and rendered')
             
         } catch (error) {
             console.error('❌ Failed to load volume:', error)
