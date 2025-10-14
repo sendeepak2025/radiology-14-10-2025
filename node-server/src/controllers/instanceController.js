@@ -514,10 +514,20 @@ async function getFrame(req, res) {
     } catch (e) {
       console.error('getFrame: buildPngFromView failed', e.message);
       res.setHeader('Content-Type', 'image/png');
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
       return res.end(generatePlaceholderPng());
     }
 
+    // 6) send PNG with CORS headers
     res.setHeader('Content-Type', 'image/png');
+    res.setHeader('Cache-Control', 'public, max-age=31536000'); // Cache for 1 year
+    res.setHeader('Access-Control-Allow-Origin', '*'); // Allow CORS
+    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Expose-Headers', 'Content-Length, Content-Type');
+    console.log(`✅ Sending PNG frame: ${pngBuffer.length} bytes for study=${studyUid} frame=${gIndex}`);
     return res.end(pngBuffer);
   } catch (e) {
     console.error('getFrame fatal error', e);
