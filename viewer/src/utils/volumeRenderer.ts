@@ -61,14 +61,61 @@ export async function createVolumeFromFrames(
 
     console.log(`✅ All ${images.length} images loaded successfully`)
 
-    const width = images[0].width
-    const height = images[0].height
-    const depth = images.length
+    let width = images[0].width
+    let height = images[0].height
+    let depth = images.length
 
-    console.log(`📐 Volume dimensions: ${width}x${height}x${depth}`)
+    console.log(`📐 Original volume dimensions: ${width}x${height}x${depth}`)
+
+    // Calculate memory requirements
+    const originalSize = width * height * depth
+    const memoryMB = (originalSize * 4) / (1024 * 1024) // Float32 = 4 bytes
+    console.log(`💾 Estimated memory: ${memoryMB.toFixed(2)}MB`)
+
+    // Downsample if memory exceeds browser limits (~200MB)
+    let downsampleFactor = 1
+    const MAX_MEMORY_MB = 180 // Safe limit below browser's ~200MB
+    
+    if (memoryMB > MAX_MEMORY_MB) {
+      // Calculate downsample factor to stay under limit
+      downsampleFactor = Math.ceil(Math.sqrt(memoryMB / MAX_MEMORY_MB))
+      console.warn(`⚠️  Volume too large (${memoryMB.toFixed(2)}MB), downsampling by factor ${downsampleFactor}`)
+      
+      // Downsample images
+      const downsampledImages: HTMLImageElement[] = []
+      const newWidth = Math.floor(width / downsampleFactor)
+      const newHeight = Math.floor(height / downsampleFactor)
+      const newDepth = Math.floor(depth / downsampleFactor)
+      
+      for (let i = 0; i < newDepth; i++) {
+        const originalIndex = i * downsampleFactor
+        if (originalIndex < images.length) {
+          const canvas = document.createElement('canvas')
+          canvas.width = newWidth
+          canvas.height = newHeight
+          const ctx = canvas.getContext('2d')!
+          ctx.drawImage(images[originalIndex], 0, 0, newWidth, newHeight)
+          
+          // Convert canvas to image
+          const img = new Image()
+          img.src = canvas.toDataURL()
+          await new Promise(resolve => { img.onload = resolve })
+          downsampledImages.push(img)
+        }
+      }
+      
+      images = downsampledImages
+      width = newWidth
+      height = newHeight
+      depth = newDepth
+      
+      const newMemoryMB = (width * height * depth * 4) / (1024 * 1024)
+      console.log(`📐 Downsampled to: ${width}x${height}x${depth} (${newMemoryMB.toFixed(2)}MB)`)
+    }
 
     // Create volume data array
     const volumeSize = width * height * depth
+    console.log(`🔨 Allocating Float32Array: ${volumeSize} elements (${(volumeSize * 4 / 1024 / 1024).toFixed(2)}MB)`)
     const volumeData = new Float32Array(volumeSize)
 
     let min = Infinity
