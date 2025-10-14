@@ -6,13 +6,15 @@ const InstanceSchema = new mongoose.Schema({
   sopInstanceUID: { type: String,  },
   instanceNumber: Number,
   modality: String,
+  filePath: String, // Local filesystem path to DICOM file
   cloudinaryUrl: String,
   cloudinaryPublicId: String,
   // Orthanc integration fields
   orthancInstanceId: { type: String, index: true }, // Orthanc instance UUID
   orthancUrl: String, // Full Orthanc instance URL
   orthancFrameIndex: { type: Number, default: 0 }, // Frame index within multi-frame DICOM
-  useOrthancPreview: { type: Boolean, default: false } // Feature flag for migration
+  useOrthancPreview: { type: Boolean, default: false }, // Feature flag for migration
+  metadata: mongoose.Schema.Types.Mixed // Additional metadata as needed
 }, { timestamps: true });
 
 module.exports = mongoose.model('Instance', InstanceSchema);
