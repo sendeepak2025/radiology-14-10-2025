@@ -59,7 +59,7 @@ const ViewerPage: React.FC = () => {
   })
   const [patientContext, setPatientContext] = useState<any>(null)
   const [activeTab, setActiveTab] = useState(0)
-  const [viewerType, setViewerType] = useState<'legacy' | 'cornerstone3d'>('cornerstone3d')
+  const [viewerType, setViewerType] = useState<'legacy' | 'cornerstone3d'>('legacy')
 
   // Load study data from DICOM API
   useEffect(() => {
@@ -269,20 +269,7 @@ const ViewerPage: React.FC = () => {
                   <Typography variant="body2" color="text.secondary">Description:</Typography>
                   <Typography variant="body1">{studyData?.studyDescription || 'N/A'}</Typography>
                 </Box>
-                <ToggleButtonGroup
-                  value={viewerType}
-                  exclusive
-                  onChange={(_, newValue) => newValue && setViewerType(newValue)}
-                  size="small"
-                  sx={{ ml: 'auto' }}
-                >
-                  <ToggleButton value="cornerstone3d" sx={{ px: 2 }}>
-                    <Typography variant="caption" fontWeight="bold">🚀 Cornerstone3D</Typography>
-                  </ToggleButton>
-                  <ToggleButton value="legacy" sx={{ px: 2 }}>
-                    <Typography variant="caption">Legacy</Typography>
-                  </ToggleButton>
-                </ToggleButtonGroup>
+              
               </Box>
             </Grid>
           </Grid>
