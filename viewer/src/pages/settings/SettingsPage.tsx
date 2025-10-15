@@ -147,6 +147,7 @@ const SettingsPage: React.FC = () => {
     licenseNumber: '',
     email: '',
     phone: '',
+    signature: null,
   });
 
   // New User Form
