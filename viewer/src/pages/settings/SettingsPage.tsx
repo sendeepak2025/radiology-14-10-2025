@@ -120,6 +120,7 @@ const SettingsPage: React.FC = () => {
       licenseNumber: 'RAD-12345',
       email: 'sarah.johnson@hospital.com',
       phone: '+1 (555) 234-5678',
+      signature: null,
     },
   ]);
 
