@@ -116,8 +116,20 @@ async function createInstanceIndexes() {
   console.log('\n📊 Creating Instance collection indexes...');
   
   try {
-    await Instance.collection.createIndex({ sopInstanceUID: 1 }, { unique: true });
-    console.log('✓ Index created: sopInstanceUID (unique)');
+    // Try to create unique index, but skip if duplicates exist
+    try {
+      await Instance.collection.createIndex({ sopInstanceUID: 1 }, { unique: true });
+      console.log('✓ Index created: sopInstanceUID (unique)');
+    } catch (error) {
+      if (error.code === 11000) {
+        console.log('⚠️  Skipping sopInstanceUID unique index (duplicates exist)');
+        // Create non-unique index instead
+        await Instance.collection.createIndex({ sopInstanceUID: 1 });
+        console.log('✓ Index created: sopInstanceUID (non-unique)');
+      } else {
+        throw error;
+      }
+    }
     
     await Instance.collection.createIndex({ studyInstanceUID: 1 });
     console.log('✓ Index created: studyInstanceUID');
