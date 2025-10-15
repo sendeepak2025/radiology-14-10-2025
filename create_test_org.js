@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Organization = require('./node-server/src/models/Organization');
+const Organization = require('./src/models/Organization');
 
 async function createTestOrganization() {
   try {
