@@ -1,49 +1,49 @@
 import { createTheme, ThemeOptions } from '@mui/material/styles';
 
 /**
- * Advanced Medical Imaging Viewer Theme
- * Combines: Modern Minimal + Professional Medical + Dark Mode + Futuristic Tech
+ * Apple-Inspired Medical Imaging Viewer Theme
+ * Clean, Minimal, Professional - Following Apple's Design Language
  */
 
 const advancedTheme: ThemeOptions = {
   palette: {
-    mode: 'dark',
+    mode: 'light',
     primary: {
-      main: '#00b4d8', // Medical blue
-      light: '#48cae4',
-      dark: '#0077b6',
+      main: '#007AFF', // Apple Blue
+      light: '#5AC8FA',
+      dark: '#0051D5',
       contrastText: '#ffffff',
     },
     secondary: {
-      main: '#8338ec', // Accent purple
-      light: '#a855f7',
-      dark: '#6d28d9',
+      main: '#5856D6', // Apple Purple
+      light: '#AF52DE',
+      dark: '#3634A3',
       contrastText: '#ffffff',
     },
     success: {
-      main: '#10b981',
-      light: '#34d399',
-      dark: '#059669',
+      main: '#34C759', // Apple Green
+      light: '#30D158',
+      dark: '#248A3D',
     },
     warning: {
-      main: '#f59e0b',
-      light: '#fbbf24',
-      dark: '#d97706',
+      main: '#FF9500', // Apple Orange
+      light: '#FFCC00',
+      dark: '#C93400',
     },
     error: {
-      main: '#ef4444',
-      light: '#f87171',
-      dark: '#dc2626',
+      main: '#FF3B30', // Apple Red
+      light: '#FF6961',
+      dark: '#D70015',
     },
     background: {
-      default: '#0a0e27', // Deep space blue
-      paper: '#111827', // Dark slate
+      default: '#F5F5F7', // Apple Light Gray
+      paper: '#FFFFFF', // Pure white
     },
     text: {
-      primary: '#f3f4f6',
-      secondary: '#9ca3af',
+      primary: '#000000',
+      secondary: '#6E6E73',
     },
-    divider: 'rgba(255, 255, 255, 0.12)',
+    divider: 'rgba(0, 0, 0, 0.08)',
   },
   typography: {
     fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
