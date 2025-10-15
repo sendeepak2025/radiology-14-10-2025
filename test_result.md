@@ -167,6 +167,66 @@ backend:
         agent: "testing"
         comment: "✅ PASS - DELETE /api/machines/:machineId endpoint working correctly, machine deleted successfully, returns 200 status with success message"
 
+  - task: "Clinical Workflow - Report Editor with Signature"
+    implemented: true
+    working: "pending_test"
+    file: "/app/viewer/src/components/reports/ReportEditor.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "pending_test"
+        agent: "main"
+        comment: "✅ IMPLEMENTED - SignatureCapture component integrated into ReportEditor. Added signature capture dialog, signature state management, and signature validation before report finalization. Export functionality added via ExportButton component."
+        
+  - task: "Clinical Workflow - Search Components Integration"
+    implemented: true
+    working: "pending_test"
+    file: "/app/viewer/src/pages/patients/PatientsPage.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "pending_test"
+        agent: "main"
+        comment: "✅ IMPLEMENTED - Integrated SearchBar, FilterPanel, QuickFilters, and StudyListWithSearch components into PatientsPage 'All Studies' tab. Advanced search and filtering capabilities now available."
+        
+  - task: "Clinical Workflow - Export Functionality"
+    implemented: true
+    working: "pending_test"
+    file: "/app/viewer/src/services/exportService.ts"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+      - working: "pending_test"
+        agent: "main"
+        comment: "✅ IMPLEMENTED - Created exportService.ts with support for exporting studies (CSV, JSON) and reports (HTML, TXT, JSON). Created ExportButton component for easy access."
+        
+  - task: "Clinical Workflow - Study Comparison Viewer"
+    implemented: true
+    working: "pending_test"
+    file: "/app/viewer/src/components/viewer/StudyComparisonViewer.tsx"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+      - working: "pending_test"
+        agent: "main"
+        comment: "✅ IMPLEMENTED - Created StudyComparisonViewer component for side-by-side study comparison. Includes study selection, swap functionality, and sync options for scroll and zoom."
+
+  - task: "Machine Navigation Integration"
+    implemented: true
+    working: "pending_test"
+    file: "/app/viewer/src/components/layout/Sidebar.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "pending_test"
+        agent: "main"
+        comment: "✅ IMPLEMENTED - Added 'Machines' navigation item to Sidebar with Computer icon. Navigation now includes Machines link for easy access to Machine Management Dashboard."
+
 frontend:
   - task: "DICOM Viewer Interface"
     implemented: true
