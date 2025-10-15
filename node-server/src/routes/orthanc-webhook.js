@@ -15,9 +15,12 @@ const { getUnifiedOrthancService } = require('../services/unified-orthanc-servic
  * Webhook endpoint - Called by Orthanc when new instance is stored
  * यह endpoint Orthanc automatically call करेगा
  */
-router.post('/orthanc/new-instance', async (req, res) => {
+router.post('/orthanc/new-instance', express.json(), express.text(), async (req, res) => {
   try {
     console.log('📥 New DICOM instance received from Orthanc');
+    console.log('Request body type:', typeof req.body);
+    console.log('Request body:', req.body);
+    console.log('Request headers:', req.headers);
     
     const { instanceId, studyInstanceUID, seriesInstanceUID, sopInstanceUID } = req.body;
     
