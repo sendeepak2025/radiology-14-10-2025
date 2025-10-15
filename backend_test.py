@@ -103,41 +103,54 @@ class MachineManagementTestSuite:
             )
             return False
 
-    def test_backend_pacs_connectivity(self) -> bool:
-        """Test 2: Test DICOM C-ECHO connectivity through backend API"""
+    def test_create_organization(self) -> bool:
+        """Test 2: Create test organization if it doesn't exist"""
         try:
-            response = requests.get(f"{self.backend_url}/api/pacs/test", timeout=15)
+            # First check if organization exists
+            response = requests.get(f"{self.backend_url}/api/organizations/{self.test_machine_data['organizationId']}", timeout=10)
             
             if response.status_code == 200:
-                data = response.json()
-                connected = data.get("data", {}).get("connected", False)
-                
                 self.log_test_result(
-                    "Backend PACS Connectivity Test",
-                    connected,
-                    f"PACS connectivity test {'passed' if connected else 'failed'}",
-                    {
-                        "connected": connected,
-                        "response": data,
-                        "endpoint": "/api/pacs/test"
-                    }
+                    "Organization Exists Check",
+                    True,
+                    f"Organization {self.test_machine_data['organizationId']} already exists",
+                    {"organizationId": self.test_machine_data['organizationId']}
                 )
-                return connected
+                return True
+            
+            # Organization doesn't exist, create it
+            org_data = {
+                "organizationId": self.test_machine_data['organizationId'],
+                "name": self.test_machine_data['organizationName'],
+                "type": "hospital",
+                "adminUserId": "test-admin"
+            }
+            
+            response = requests.post(f"{self.backend_url}/api/organizations", json=org_data, timeout=10)
+            
+            if response.status_code in [200, 201]:
+                self.log_test_result(
+                    "Create Test Organization",
+                    True,
+                    f"Test organization created successfully",
+                    {"organizationId": self.test_machine_data['organizationId']}
+                )
+                return True
             else:
                 self.log_test_result(
-                    "Backend PACS Connectivity Test",
+                    "Create Test Organization",
                     False,
-                    f"HTTP {response.status_code}: {response.text}",
+                    f"Failed to create organization - HTTP {response.status_code}: {response.text}",
                     {"status_code": response.status_code, "response": response.text}
                 )
                 return False
                 
         except Exception as e:
             self.log_test_result(
-                "Backend PACS Connectivity Test",
+                "Create Test Organization",
                 False,
                 f"Request failed: {str(e)}",
-                {"error": str(e), "endpoint": "/api/pacs/test"}
+                {"error": str(e)}
             )
             return False
 
