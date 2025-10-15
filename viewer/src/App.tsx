@@ -360,6 +360,15 @@ function App() {
             path="/dashboard"
             element={
               <SimpleProtectedRoute>
+                <EnhancedDashboard />
+              </SimpleProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/patients"
+            element={
+              <SimpleProtectedRoute>
                 <PatientsPage />
               </SimpleProtectedRoute>
             }
