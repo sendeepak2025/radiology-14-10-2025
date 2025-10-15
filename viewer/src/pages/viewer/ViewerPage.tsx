@@ -479,6 +479,24 @@ const ViewerPage: React.FC = () => {
             </Box>
           </Box>
         </Box>
+
+        {/* AI Results Panel */}
+        <AIResultsPanel
+          open={aiPanelOpen}
+          onClose={() => setAiPanelOpen(false)}
+          analysis={aiAnalysis}
+          loading={aiLoading}
+          onUpdateReview={handleUpdateReview}
+          userName={user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : undefined}
+        />
+
+        {/* Snackbar for notifications */}
+        <Snackbar
+          open={snackbarOpen}
+          autoHideDuration={6000}
+          onClose={() => setSnackbarOpen(false)}
+          message={snackbarMessage}
+        />
       </Box>
     </>
   )
