@@ -53,8 +53,25 @@ async function analyzeStudy(req, res) {
       });
     }
 
-    // TODO: Save analysis result to database
-    // await saveAnalysisResult(result.data);
+    // Save analysis result to database
+    try {
+      const aiAnalysis = new AIAnalysis({
+        studyInstanceUID: result.data.study_uid,
+        analysisId: result.data.analysis_id,
+        modelUsed: result.data.model_used,
+        analysisTimestamp: new Date(result.data.timestamp),
+        summary: result.data.summary,
+        findings: result.data.findings,
+        recommendations: result.data.recommendations,
+        aiConfidence: result.data.ai_confidence
+      });
+
+      await aiAnalysis.save();
+      console.log(`AI analysis saved to database: ${result.data.analysis_id}`);
+    } catch (saveError) {
+      console.error('Error saving AI analysis:', saveError.message);
+      // Continue even if save fails
+    }
 
     return res.json({
       success: true,
