@@ -146,4 +146,12 @@ router.use('/api/health', healthMonitoringRoutes);
 const studiesPaginationRoutes = require('./studies-pagination');
 router.use('/api/studies', studiesPaginationRoutes);
 
+// Report Templates API - Radiology report templates
+const reportTemplateRoutes = require('./report-templates');
+router.use('/api/report-templates', reportTemplateRoutes);
+
+// Reports API - Radiology reports
+const reportRoutes = require('./reports');
+router.use('/api/reports', reportRoutes);
+
 module.exports = router;
