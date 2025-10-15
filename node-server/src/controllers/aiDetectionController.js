@@ -6,6 +6,7 @@
 const { getAIDetectionService } = require('../services/ai-detection-service');
 const Study = require('../models/Study');
 const Instance = require('../models/Instance');
+const AIAnalysis = require('../models/AIAnalysis');
 
 /**
  * Analyze a study with AI
