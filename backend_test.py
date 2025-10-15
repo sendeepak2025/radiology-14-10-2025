@@ -14,28 +14,40 @@ class MachineManagementTestSuite:
     def __init__(self):
         # Configuration from review request
         self.backend_url = "http://localhost:8001"
-        self.orthanc_url = "http://localhost:8042"
-        self.orthanc_username = "orthanc"
-        self.orthanc_password = "orthanc"
-        self.orthanc_aet = "ORTHANC"
-        self.dicom_port = 4242
         
         # Test results
         self.test_results = []
         self.failed_tests = []
         
-        # Expected test studies from review request
-        self.expected_studies = [
-            {"patientName": "John^Doe", "modality": "CT"},
-            {"patientName": "Jane^Smith", "modality": "MR"}, 
-            {"patientName": "Bob^Wilson", "modality": "CR"}
-        ]
+        # Test data from review request
+        self.test_machine_data = {
+            "organizationId": "ORG-DEFAULT",
+            "organizationName": "Test Hospital",
+            "name": "CT Scanner 1",
+            "machineType": "CT",
+            "manufacturer": "GE Healthcare",
+            "model": "Revolution CT",
+            "serialNumber": "CT12345",
+            "ipAddress": "192.168.1.100",
+            "port": 4242,
+            "aeTitle": "CT_SCANNER_1",
+            "callingAeTitle": "PACS_SERVER",
+            "location": {
+                "building": "Main Hospital",
+                "floor": "2",
+                "room": "CT Room 1"
+            },
+            "autoAcceptStudies": True,
+            "notes": "Primary CT scanner for emergency department"
+        }
         
-        print(f"🔧 DICOM PACS Test Suite Initialized")
+        # Store created machine ID for cleanup
+        self.created_machine_id = None
+        
+        print(f"🔧 Machine Management Test Suite Initialized")
         print(f"   Backend URL: {self.backend_url}")
-        print(f"   Orthanc URL: {self.orthanc_url}")
-        print(f"   Expected Orthanc Version: 1.10.1")
-        print(f"   Expected Studies: {len(self.expected_studies)}")
+        print(f"   Test Organization: {self.test_machine_data['organizationId']}")
+        print(f"   Test Machine: {self.test_machine_data['name']}")
 
     def log_test_result(self, test_name: str, success: bool, message: str, details: Dict = None):
         """Log test result"""
