@@ -155,6 +155,13 @@ const PatientsPage: React.FC = () => {
     navigate(`/patient/studies/${studyUID}`)
   }
 
+  const handleOpenComparison = () => {
+    if (allStudies.length >= 2) {
+      setSelectedStudiesForComparison(allStudies.slice(0, 2))
+      setComparisonOpen(true)
+    }
+  }
+
   const handleAddPatientOpen = () => setAddOpen(true)
   const handleAddPatientClose = () => {
     setAddOpen(false)
