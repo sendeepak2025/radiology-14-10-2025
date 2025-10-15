@@ -92,6 +92,81 @@ backend:
         agent: "testing"
         comment: "✅ PASS - Unified studies endpoint (/api/pacs/unified-studies) working, merging 72 database studies with 9 PACS studies successfully"
 
+  - task: "Machine Management API - Create Machine"
+    implemented: true
+    working: true
+    file: "/app/node-server/src/controllers/machineController.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Initial test setup - needs verification of machine creation endpoint"
+      - working: true
+        agent: "testing"
+        comment: "✅ PASS - POST /api/machines endpoint working correctly, machine created with ID MACHINE-1760522008011-770hkihoj, returns 201 status with complete machine data including machineId"
+
+  - task: "Machine Management API - Get Machines by Organization"
+    implemented: true
+    working: true
+    file: "/app/node-server/src/controllers/machineController.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Initial test setup - needs verification of get machines endpoint"
+      - working: true
+        agent: "testing"
+        comment: "✅ PASS - GET /api/machines?organizationId=ORG-DEFAULT endpoint working correctly, retrieved 1 machine for organization, found created machine in results"
+
+  - task: "Machine Management API - Generate QR Code"
+    implemented: true
+    working: true
+    file: "/app/node-server/src/controllers/machineController.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Initial test setup - needs verification of QR code generation endpoint"
+      - working: true
+        agent: "testing"
+        comment: "✅ PASS - GET /api/machines/:machineId/config?format=qr endpoint working correctly, generated base64 encoded QR code (4262 chars) with machine configuration data"
+
+  - task: "Machine Management API - Test DICOM Connection"
+    implemented: true
+    working: true
+    file: "/app/node-server/src/controllers/machineController.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Initial test setup - needs verification of DICOM connection test endpoint"
+      - working: true
+        agent: "testing"
+        comment: "✅ PASS - POST /api/machines/:machineId/test endpoint working correctly, connection test completed successfully (simulated), returns test results with status and timestamp"
+
+  - task: "Machine Management API - Delete Machine"
+    implemented: true
+    working: true
+    file: "/app/node-server/src/controllers/machineController.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Initial test setup - needs verification of machine deletion endpoint"
+      - working: true
+        agent: "testing"
+        comment: "✅ PASS - DELETE /api/machines/:machineId endpoint working correctly, machine deleted successfully, returns 200 status with success message"
+
 frontend:
   - task: "DICOM Viewer Interface"
     implemented: true
