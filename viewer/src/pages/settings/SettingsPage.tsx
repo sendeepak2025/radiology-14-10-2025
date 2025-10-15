@@ -82,6 +82,7 @@ interface Doctor {
   licenseNumber: string;
   email: string;
   phone: string;
+  signature: string | null;
 }
 
 interface User {
