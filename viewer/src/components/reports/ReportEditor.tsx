@@ -373,30 +373,52 @@ const ReportEditor: React.FC<ReportEditorProps> = ({
 
       {/* Actions */}
       <Paper sx={{ p: 2, mt: 2 }}>
-        <Stack direction="row" spacing={2} justifyContent="flex-end">
-          <Button
-            startIcon={<PreviewIcon />}
-            onClick={() => setPreviewOpen(true)}
-            disabled={!reportContent}
-          >
-            Preview
-          </Button>
-          <Button
-            variant="outlined"
-            startIcon={<SaveIcon />}
-            onClick={handleSaveDraft}
-            disabled={saving || isFinalized || !reportContent}
-          >
-            {saving ? <CircularProgress size={20} /> : 'Save Draft'}
-          </Button>
-          <Button
-            variant="contained"
-            startIcon={<SendIcon />}
-            onClick={handleFinalize}
-            disabled={saving || isFinalized || !currentReport}
-          >
-            Finalize Report
-          </Button>
+        <Stack direction="row" spacing={2} justifyContent="space-between" alignItems="center">
+          <Box>
+            {reportSignature && (
+              <Chip
+                icon={<DrawIcon />}
+                label="Signed"
+                color="success"
+                size="small"
+                onClick={() => setSignatureDialogOpen(true)}
+              />
+            )}
+          </Box>
+          <Stack direction="row" spacing={2}>
+            <Button
+              startIcon={<PreviewIcon />}
+              onClick={() => setPreviewOpen(true)}
+              disabled={!reportContent}
+            >
+              Preview
+            </Button>
+            <Button
+              variant="outlined"
+              startIcon={<DrawIcon />}
+              onClick={() => setSignatureDialogOpen(true)}
+              disabled={isFinalized}
+              color={reportSignature ? 'success' : 'primary'}
+            >
+              {reportSignature ? 'Update Signature' : 'Sign Report'}
+            </Button>
+            <Button
+              variant="outlined"
+              startIcon={<SaveIcon />}
+              onClick={handleSaveDraft}
+              disabled={saving || isFinalized || !reportContent}
+            >
+              {saving ? <CircularProgress size={20} /> : 'Save Draft'}
+            </Button>
+            <Button
+              variant="contained"
+              startIcon={<SendIcon />}
+              onClick={handleFinalize}
+              disabled={saving || isFinalized || !currentReport || !reportSignature}
+            >
+              Finalize Report
+            </Button>
+          </Stack>
         </Stack>
       </Paper>
 
