@@ -64,6 +64,13 @@ const navigationItems: NavigationItem[] = [
     permission: 'studies:read',
   },
   {
+    id: 'machines',
+    label: 'Machines',
+    icon: <Computer />,
+    path: '/machines',
+    permission: 'machines:read',
+  },
+  {
     id: 'analytics',
     label: 'Analytics',
     icon: <Analytics />,
