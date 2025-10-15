@@ -128,6 +128,7 @@ const LoginPage: React.FC = () => {
           <Box component="form" onSubmit={handleSubmit} noValidate>
             <TextField
               fullWidth
+              name="username"
               label="Username or Email"
               type="text"
               value={credentials.username}
@@ -142,6 +143,7 @@ const LoginPage: React.FC = () => {
             
             <TextField
               fullWidth
+              name="password"
               label="Password"
               type="password"
               value={credentials.password}
