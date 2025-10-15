@@ -138,4 +138,8 @@ router.use('/api/machines', machineRoutes);
 // Error Logging API - Frontend error tracking and monitoring
 router.use('/api/errors', errorRoutes);
 
+// Health Monitoring API - System health and metrics
+const healthMonitoringRoutes = require('./health-monitoring');
+router.use('/api/health', healthMonitoringRoutes);
+
 module.exports = router;
