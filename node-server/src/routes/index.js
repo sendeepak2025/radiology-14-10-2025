@@ -130,4 +130,8 @@ router.use('/api/signature', signatureRoutes);
 const aiDetectionRoutes = require('./ai-detection');
 router.use('/api/ai', aiDetectionRoutes);
 
+// Machine Management API - Medical imaging machine management
+const machineRoutes = require('./machines');
+router.use('/api/machines', machineRoutes);
+
 module.exports = router;
