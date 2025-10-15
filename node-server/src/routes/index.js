@@ -20,6 +20,7 @@ const pacsRoutes = require('./pacs');
 const viewerSelectionRoutes = require('./viewer-selection');
 const structuredReportsRoutes = require('./structured-reports');
 const signatureRoutes = require('./signature');
+const errorRoutes = require('./errors');
 
 const router = express.Router();
 
