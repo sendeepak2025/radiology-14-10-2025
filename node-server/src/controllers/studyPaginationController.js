@@ -148,7 +148,16 @@ async function getStudiesCount(req, res) {
     }
     
     if (modality) {
-      query.modality = modality;
+      // Handle both single modality and comma-separated list
+      const modalityArray = Array.isArray(modality) 
+        ? modality 
+        : modality.split(',').map(m => m.trim());
+      
+      if (modalityArray.length === 1) {
+        query.modality = modalityArray[0];
+      } else if (modalityArray.length > 1) {
+        query.modality = { $in: modalityArray };
+      }
     }
     
     // Count documents
