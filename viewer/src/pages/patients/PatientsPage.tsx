@@ -39,6 +39,7 @@ import {
   Upload,
   CheckCircle,
   Computer,
+  Compare as CompareIcon,
 } from "@mui/icons-material"
 import { Helmet } from "react-helmet-async"
 import {
@@ -49,6 +50,8 @@ import {
   uploadDicomFileForPatient,
 } from "../../services/ApiService"
 import { useNavigate } from "react-router-dom"
+import StudyListWithSearch from "../../components/search/StudyListWithSearch"
+import StudyComparisonViewer from "../../components/viewer/StudyComparisonViewer"
 
 interface PatientItem {
   patientID: string
