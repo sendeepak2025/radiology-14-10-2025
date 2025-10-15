@@ -149,8 +149,109 @@ async function analyzeUploadedImage(req, res) {
   }
 }
 
+/**
+ * Get AI analysis history for a study
+ * GET /api/ai/analysis/:studyUid
+ */
+async function getAnalysisHistory(req, res) {
+  try {
+    const { studyUid } = req.params;
+
+    const analyses = await AIAnalysis.find({ studyInstanceUID: studyUid })
+      .sort({ analysisTimestamp: -1 })
+      .lean();
+
+    return res.json({
+      success: true,
+      data: analyses
+    });
+
+  } catch (error) {
+    console.error('Error fetching analysis history:', error);
+    return res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+}
+
+/**
+ * Get latest AI analysis for a study
+ * GET /api/ai/analysis/:studyUid/latest
+ */
+async function getLatestAnalysis(req, res) {
+  try {
+    const { studyUid } = req.params;
+
+    const analysis = await AIAnalysis.findOne({ studyInstanceUID: studyUid })
+      .sort({ analysisTimestamp: -1 })
+      .lean();
+
+    if (!analysis) {
+      return res.status(404).json({
+        success: false,
+        message: 'No AI analysis found for this study'
+      });
+    }
+
+    return res.json({
+      success: true,
+      data: analysis
+    });
+
+  } catch (error) {
+    console.error('Error fetching latest analysis:', error);
+    return res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+}
+
+/**
+ * Update analysis review status
+ * PUT /api/ai/analysis/:analysisId/review
+ */
+async function updateReviewStatus(req, res) {
+  try {
+    const { analysisId } = req.params;
+    const { reviewStatus, radiologistNotes, reviewedBy } = req.body;
+
+    const analysis = await AIAnalysis.findOne({ analysisId });
+
+    if (!analysis) {
+      return res.status(404).json({
+        success: false,
+        message: 'Analysis not found'
+      });
+    }
+
+    analysis.reviewStatus = reviewStatus;
+    analysis.radiologistNotes = radiologistNotes || analysis.radiologistNotes;
+    analysis.reviewedBy = reviewedBy || 'Unknown';
+    analysis.reviewedAt = new Date();
+
+    await analysis.save();
+
+    return res.json({
+      success: true,
+      data: analysis
+    });
+
+  } catch (error) {
+    console.error('Error updating review status:', error);
+    return res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+}
+
 module.exports = {
   analyzeStudy,
   getAIStatus,
-  analyzeUploadedImage
+  analyzeUploadedImage,
+  getAnalysisHistory,
+  getLatestAnalysis,
+  updateReviewStatus
 };
