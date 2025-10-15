@@ -490,78 +490,34 @@ const PatientsPage: React.FC = () => {
                       All Studies
                     </Typography>
                     <Typography variant="body1" color="text.secondary">
-                      Browse all medical imaging studies
+                      Browse and search all medical imaging studies
                     </Typography>
                   </Box>
-                  <Button
-                    variant="contained"
-                    startIcon={<Upload />}
-                    onClick={handlePacsUploadOpen}
-                    size="large"
-                    sx={{ textTransform: "none", px: 3 }}
-                  >
-                    Upload Study
-                  </Button>
+                  <Stack direction="row" spacing={2}>
+                    <Button
+                      variant="outlined"
+                      startIcon={<CompareIcon />}
+                      onClick={handleOpenComparison}
+                      size="large"
+                      disabled={allStudies.length < 2}
+                      sx={{ textTransform: "none", px: 3 }}
+                    >
+                      Compare Studies
+                    </Button>
+                    <Button
+                      variant="contained"
+                      startIcon={<Upload />}
+                      onClick={handlePacsUploadOpen}
+                      size="large"
+                      sx={{ textTransform: "none", px: 3 }}
+                    >
+                      Upload Study
+                    </Button>
+                  </Stack>
                 </Stack>
 
-                {loadingAllStudies ? (
-                  <Box sx={{ display: "flex", justifyContent: "center", py: 10 }}>
-                    <CircularProgress size={48} />
-                  </Box>
-                ) : (
-                  <Paper elevation={0} sx={{ border: 1, borderColor: "divider" }}>
-                    <List disablePadding>
-                      {allStudies.map((study, idx) => (
-                        <React.Fragment key={study.studyInstanceUID}>
-                          <ListItemButton
-                            onClick={() => handleStudyClick(study.studyInstanceUID)}
-                            sx={{ py: 2.5, px: 3 }}
-                          >
-                            <ListItemIcon>
-                              <Folder color="primary" />
-                            </ListItemIcon>
-                            <ListItemText
-                              primary={
-                                <Stack direction="row" spacing={1} alignItems="center">
-                                  <Typography variant="subtitle1" fontWeight="bold">
-                                    {study.patientName || "Unknown Patient"}
-                                  </Typography>
-                                  <Chip label={study.modality} size="small" color="primary" />
-                                </Stack>
-                              }
-                              secondary={
-                                <Box sx={{ mt: 0.5 }}>
-                                  <Typography variant="body2" color="text.secondary">
-                                    {study.studyDescription || "No description"}
-                                  </Typography>
-                                  <Stack direction="row" spacing={2} sx={{ mt: 0.5 }}>
-                                    <Typography variant="caption" color="text.secondary">
-                                      <Image sx={{ fontSize: 14, verticalAlign: "middle", mr: 0.5 }} />
-                                      {study.numberOfInstances} images
-                                    </Typography>
-                                    <Typography variant="caption" color="text.secondary">
-                                      {study.numberOfSeries} series
-                                    </Typography>
-                                  </Stack>
-                                </Box>
-                              }
-                            />
-                            <ChevronRight color="action" />
-                          </ListItemButton>
-                          {idx < allStudies.length - 1 && <Divider />}
-                        </React.Fragment>
-                      ))}
-                      {allStudies.length === 0 && (
-                        <Box sx={{ textAlign: "center", py: 10 }}>
-                          <Science sx={{ fontSize: 80, color: "text.disabled", mb: 2 }} />
-                          <Typography variant="h6" color="text.secondary">
-                            No studies found
-                          </Typography>
-                        </Box>
-                      )}
-                    </List>
-                  </Paper>
-                )}
+                {/* Integrated Search and Study List */}
+                <StudyListWithSearch />
               </Box>
             </Box>
           )}
