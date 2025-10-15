@@ -195,6 +195,30 @@ frontend:
         agent: "testing"
         comment: "❌ FAIL - 3D viewer functionality not implemented. Critical issues: No 3D libraries loaded (VTK.js, Cornerstone3D), No rendering canvas found, No 3D UI elements (tabs/mode switchers), No volume rendering capabilities. WebGL support available but unused. 3D viewer shows black screen."
 
+  - task: "Machine Management System API"
+    implemented: true
+    working: true
+    file: "/app/node-server/src/routes/machines.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "✅ PASS - All Machine Management API endpoints working (7/7 tests passed). Machine CRUD operations, QR code generation, DICOM connection test all functional."
+
+  - task: "Machine Management System Frontend"
+    implemented: true
+    working: true
+    file: "/app/viewer/src/pages/machines/MachinesDashboard.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "✅ PASS - Machines Dashboard integrated into navigation. Route /machines accessible with back navigation, Add Machine button, statistics cards, and empty state visible."
+
 metadata:
   created_by: "testing_agent"
   version: "1.0"
