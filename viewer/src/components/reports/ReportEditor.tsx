@@ -26,10 +26,12 @@ import {
   Preview as PreviewIcon,
   Close as CloseIcon,
   Draw as DrawIcon,
+  Download as DownloadIcon,
 } from '@mui/icons-material';
 
 import reportService, { ReportTemplate, Report } from '../../services/reportService';
 import SignatureCapture from './SignatureCapture';
+import ExportButton from '../common/ExportButton';
 
 interface ReportEditorProps {
   studyInstanceUID: string;
