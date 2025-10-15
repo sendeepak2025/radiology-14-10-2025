@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Alert, Typography, Button, Paper, Grid, Chip, Tabs, Tab, ToggleButton, ToggleButtonGroup } from '@mui/material'
+import { Box, Alert, Typography, Button, Paper, Grid, Chip, Tabs, Tab, ToggleButton, ToggleButtonGroup, Snackbar } from '@mui/material'
 import { Helmet } from 'react-helmet-async'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
@@ -8,6 +8,9 @@ import Cornerstone3DViewer from '../../components/viewer/Cornerstone3DViewer'
 import { ReportingInterface } from '../../components/reporting/ReportingInterface'
 import { PatientContextPanel } from '../../components/worklist/PatientContextPanel'
 import ApiService from '../../services/ApiService'
+import AIAnalysisButton from '../../components/ai/AIAnalysisButton'
+import AIResultsPanel from '../../components/ai/AIResultsPanel'
+import aiDetectionService, { type AIAnalysisHistory } from '../../services/aiDetectionService'
 
 interface TabPanelProps {
   children?: React.ReactNode
