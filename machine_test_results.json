@@ -1,9 +1,9 @@
 {
   "total_tests": 7,
-  "passed_tests": 3,
-  "failed_tests": 4,
-  "success_rate": 42.857142857142854,
-  "critical_issues": 2,
+  "passed_tests": 7,
+  "failed_tests": 0,
+  "success_rate": 100.0,
+  "critical_issues": 0,
   "all_results": [
     {
       "test": "Backend Server Health",
@@ -14,7 +14,7 @@
         "response_length": 78,
         "endpoint": "/"
       },
-      "timestamp": "2025-10-15 09:52:01"
+      "timestamp": "2025-10-15 09:53:27"
     },
     {
       "test": "Organization Setup",
@@ -23,117 +23,77 @@
       "details": {
         "organizationId": "ORG-DEFAULT"
       },
-      "timestamp": "2025-10-15 09:52:01"
+      "timestamp": "2025-10-15 09:53:27"
     },
     {
       "test": "Create Machine (POST /api/machines)",
-      "success": false,
-      "message": "HTTP 404: {\"success\":false,\"message\":\"Organization not found\"}",
+      "success": true,
+      "message": "Machine created successfully with ID: MACHINE-1760522008011-770hkihoj",
       "details": {
-        "status_code": 404,
-        "response": "{\"success\":false,\"message\":\"Organization not found\"}"
+        "machineId": "MACHINE-1760522008011-770hkihoj",
+        "name": "CT Scanner 1",
+        "machineType": "CT",
+        "status": "pending",
+        "endpoint": "/api/machines"
       },
-      "timestamp": "2025-10-15 09:52:01"
+      "timestamp": "2025-10-15 09:53:28"
     },
     {
       "test": "Get Machines by Organization (GET /api/machines)",
       "success": true,
-      "message": "Retrieved 0 machines for organization ORG-DEFAULT",
+      "message": "Retrieved 1 machines for organization ORG-DEFAULT",
       "details": {
-        "count": 0,
+        "count": 1,
         "organizationId": "ORG-DEFAULT",
-        "found_created_machine": false,
-        "machines": [],
+        "found_created_machine": true,
+        "machines": [
+          "CT Scanner 1"
+        ],
         "endpoint": "/api/machines"
       },
-      "timestamp": "2025-10-15 09:52:01"
+      "timestamp": "2025-10-15 09:53:28"
     },
     {
-      "test": "Generate QR Code (GET /api/machines/:machineId/qr-code)",
-      "success": false,
-      "message": "No machine ID available for QR code test",
+      "test": "Generate QR Code (GET /api/machines/:machineId/config?format=qr)",
+      "success": true,
+      "message": "QR code generated successfully for machine MACHINE-1760522008011-770hkihoj",
       "details": {
-        "reason": "Machine creation failed or machine ID not found"
+        "machineId": "MACHINE-1760522008011-770hkihoj",
+        "qr_code_length": 4262,
+        "has_config": true,
+        "endpoint": "/api/machines/MACHINE-1760522008011-770hkihoj/config?format=qr"
       },
-      "timestamp": "2025-10-15 09:52:01"
-    },
-    {
-      "test": "Test DICOM Connection (POST /api/machines/:machineId/test)",
-      "success": false,
-      "message": "No machine ID available for DICOM connection test",
-      "details": {
-        "reason": "Machine creation failed or machine ID not found"
-      },
-      "timestamp": "2025-10-15 09:52:01"
-    },
-    {
-      "test": "Delete Machine (DELETE /api/machines/:machineId)",
-      "success": false,
-      "message": "No machine ID available for deletion test",
-      "details": {
-        "reason": "Machine creation failed or machine ID not found"
-      },
-      "timestamp": "2025-10-15 09:52:01"
-    }
-  ],
-  "failed_results": [
-    {
-      "test": "Create Machine (POST /api/machines)",
-      "success": false,
-      "message": "HTTP 404: {\"success\":false,\"message\":\"Organization not found\"}",
-      "details": {
-        "status_code": 404,
-        "response": "{\"success\":false,\"message\":\"Organization not found\"}"
-      },
-      "timestamp": "2025-10-15 09:52:01"
-    },
-    {
-      "test": "Generate QR Code (GET /api/machines/:machineId/qr-code)",
-      "success": false,
-      "message": "No machine ID available for QR code test",
-      "details": {
-        "reason": "Machine creation failed or machine ID not found"
-      },
-      "timestamp": "2025-10-15 09:52:01"
+      "timestamp": "2025-10-15 09:53:28"
     },
     {
       "test": "Test DICOM Connection (POST /api/machines/:machineId/test)",
-      "success": false,
-      "message": "No machine ID available for DICOM connection test",
+      "success": true,
+      "message": "DICOM connection test completed - Connection: Success",
       "details": {
-        "reason": "Machine creation failed or machine ID not found"
+        "machineId": "MACHINE-1760522008011-770hkihoj",
+        "connection_success": true,
+        "test_result": {
+          "success": true,
+          "message": "Connection timeout",
+          "testedAt": "2025-10-15T09:53:29.414Z"
+        },
+        "endpoint": "/api/machines/MACHINE-1760522008011-770hkihoj/test",
+        "note": "Connection failure expected without actual DICOM server"
       },
-      "timestamp": "2025-10-15 09:52:01"
+      "timestamp": "2025-10-15 09:53:29"
     },
     {
       "test": "Delete Machine (DELETE /api/machines/:machineId)",
-      "success": false,
-      "message": "No machine ID available for deletion test",
+      "success": true,
+      "message": "Machine MACHINE-1760522008011-770hkihoj deleted successfully",
       "details": {
-        "reason": "Machine creation failed or machine ID not found"
+        "machineId": "MACHINE-1760522008011-770hkihoj",
+        "endpoint": "/api/machines/MACHINE-1760522008011-770hkihoj",
+        "message": "Machine deleted successfully"
       },
-      "timestamp": "2025-10-15 09:52:01"
+      "timestamp": "2025-10-15 09:53:30"
     }
   ],
-  "critical_failures": [
-    {
-      "test": "Create Machine (POST /api/machines)",
-      "success": false,
-      "message": "HTTP 404: {\"success\":false,\"message\":\"Organization not found\"}",
-      "details": {
-        "status_code": 404,
-        "response": "{\"success\":false,\"message\":\"Organization not found\"}"
-      },
-      "timestamp": "2025-10-15 09:52:01"
-    },
-    {
-      "test": "Delete Machine (DELETE /api/machines/:machineId)",
-      "success": false,
-      "message": "No machine ID available for deletion test",
-      "details": {
-        "reason": "Machine creation failed or machine ID not found"
-      },
-      "timestamp": "2025-10-15 09:52:01"
-    }
-  ]
+  "failed_results": [],
+  "critical_failures": []
 }
