@@ -95,6 +95,8 @@ const PatientsPage: React.FC = () => {
   const [pacsUploading, setPacsUploading] = useState(false)
   const [pacsUploadSuccess, setPacsUploadSuccess] = useState(false)
   const [uploadedStudyUID, setUploadedStudyUID] = useState<string | null>(null)
+  const [comparisonOpen, setComparisonOpen] = useState(false)
+  const [selectedStudiesForComparison, setSelectedStudiesForComparison] = useState<PatientStudyItem[]>([])
   const navigate = useNavigate()
 
   useEffect(() => {
