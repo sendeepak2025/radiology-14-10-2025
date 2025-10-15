@@ -1,0 +1,139 @@
+{
+  "total_tests": 7,
+  "passed_tests": 3,
+  "failed_tests": 4,
+  "success_rate": 42.857142857142854,
+  "critical_issues": 2,
+  "all_results": [
+    {
+      "test": "Backend Server Health",
+      "success": true,
+      "message": "Backend server is running and responding",
+      "details": {
+        "status_code": 200,
+        "response_length": 78,
+        "endpoint": "/"
+      },
+      "timestamp": "2025-10-15 09:52:01"
+    },
+    {
+      "test": "Organization Setup",
+      "success": true,
+      "message": "Assuming organization ORG-DEFAULT exists or will be auto-created",
+      "details": {
+        "organizationId": "ORG-DEFAULT"
+      },
+      "timestamp": "2025-10-15 09:52:01"
+    },
+    {
+      "test": "Create Machine (POST /api/machines)",
+      "success": false,
+      "message": "HTTP 404: {\"success\":false,\"message\":\"Organization not found\"}",
+      "details": {
+        "status_code": 404,
+        "response": "{\"success\":false,\"message\":\"Organization not found\"}"
+      },
+      "timestamp": "2025-10-15 09:52:01"
+    },
+    {
+      "test": "Get Machines by Organization (GET /api/machines)",
+      "success": true,
+      "message": "Retrieved 0 machines for organization ORG-DEFAULT",
+      "details": {
+        "count": 0,
+        "organizationId": "ORG-DEFAULT",
+        "found_created_machine": false,
+        "machines": [],
+        "endpoint": "/api/machines"
+      },
+      "timestamp": "2025-10-15 09:52:01"
+    },
+    {
+      "test": "Generate QR Code (GET /api/machines/:machineId/qr-code)",
+      "success": false,
+      "message": "No machine ID available for QR code test",
+      "details": {
+        "reason": "Machine creation failed or machine ID not found"
+      },
+      "timestamp": "2025-10-15 09:52:01"
+    },
+    {
+      "test": "Test DICOM Connection (POST /api/machines/:machineId/test)",
+      "success": false,
+      "message": "No machine ID available for DICOM connection test",
+      "details": {
+        "reason": "Machine creation failed or machine ID not found"
+      },
+      "timestamp": "2025-10-15 09:52:01"
+    },
+    {
+      "test": "Delete Machine (DELETE /api/machines/:machineId)",
+      "success": false,
+      "message": "No machine ID available for deletion test",
+      "details": {
+        "reason": "Machine creation failed or machine ID not found"
+      },
+      "timestamp": "2025-10-15 09:52:01"
+    }
+  ],
+  "failed_results": [
+    {
+      "test": "Create Machine (POST /api/machines)",
+      "success": false,
+      "message": "HTTP 404: {\"success\":false,\"message\":\"Organization not found\"}",
+      "details": {
+        "status_code": 404,
+        "response": "{\"success\":false,\"message\":\"Organization not found\"}"
+      },
+      "timestamp": "2025-10-15 09:52:01"
+    },
+    {
+      "test": "Generate QR Code (GET /api/machines/:machineId/qr-code)",
+      "success": false,
+      "message": "No machine ID available for QR code test",
+      "details": {
+        "reason": "Machine creation failed or machine ID not found"
+      },
+      "timestamp": "2025-10-15 09:52:01"
+    },
+    {
+      "test": "Test DICOM Connection (POST /api/machines/:machineId/test)",
+      "success": false,
+      "message": "No machine ID available for DICOM connection test",
+      "details": {
+        "reason": "Machine creation failed or machine ID not found"
+      },
+      "timestamp": "2025-10-15 09:52:01"
+    },
+    {
+      "test": "Delete Machine (DELETE /api/machines/:machineId)",
+      "success": false,
+      "message": "No machine ID available for deletion test",
+      "details": {
+        "reason": "Machine creation failed or machine ID not found"
+      },
+      "timestamp": "2025-10-15 09:52:01"
+    }
+  ],
+  "critical_failures": [
+    {
+      "test": "Create Machine (POST /api/machines)",
+      "success": false,
+      "message": "HTTP 404: {\"success\":false,\"message\":\"Organization not found\"}",
+      "details": {
+        "status_code": 404,
+        "response": "{\"success\":false,\"message\":\"Organization not found\"}"
+      },
+      "timestamp": "2025-10-15 09:52:01"
+    },
+    {
+      "test": "Delete Machine (DELETE /api/machines/:machineId)",
+      "success": false,
+      "message": "No machine ID available for deletion test",
+      "details": {
+        "reason": "Machine creation failed or machine ID not found"
+      },
+      "timestamp": "2025-10-15 09:52:01"
+    }
+  ]
+}
