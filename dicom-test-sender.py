@@ -33,12 +33,10 @@ def create_test_dicom(patient_name="Test^Patient", modality="CT",
     file_meta.ImplementationClassUID = generate_uid()
     
     # Create main dataset
-    ds = FileDataset(
-        filename="",
-        dataset={},
-        file_meta=file_meta,
-        preamble=b"\0" * 128
-    )
+    ds = Dataset()
+    ds.file_meta = file_meta
+    ds.is_little_endian = True
+    ds.is_implicit_VR = False
     
     # Patient Information
     ds.PatientName = patient_name
