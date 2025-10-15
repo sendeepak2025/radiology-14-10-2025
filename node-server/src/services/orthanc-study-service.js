@@ -102,8 +102,9 @@ class OrthancStudyService {
       let totalFrames = 0;
       for (const instanceId of instances) {
         try {
-          const instanceTags = await this.axiosInstance.get(`/instances/${instanceId}/simplified-tags`);
-          const frames = parseInt(instanceTags.data.NumberOfFrames) || 1;
+          const instanceResponse = await this.axiosInstance.get(`/instances/${instanceId}`);
+          const instanceData = instanceResponse.data;
+          const frames = parseInt(instanceData.MainDicomTags?.NumberOfFrames) || 1;
           totalFrames += frames;
         } catch (error) {
           console.warn(`Failed to get frame count for instance ${instanceId}:`, error.message);
