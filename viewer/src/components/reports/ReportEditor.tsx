@@ -183,6 +183,13 @@ const ReportEditor: React.FC<ReportEditorProps> = ({
       return;
     }
     
+    // Check if signature is required
+    if (!reportSignature) {
+      setError('Please sign the report before finalizing');
+      setSignatureDialogOpen(true);
+      return;
+    }
+    
     setSaving(true);
     try {
       const response = await reportService.finalizeReport(currentReport.reportId);
@@ -194,6 +201,12 @@ const ReportEditor: React.FC<ReportEditorProps> = ({
     } finally {
       setSaving(false);
     }
+  };
+
+  const handleSignatureSave = (signatureData: string) => {
+    setReportSignature(signatureData);
+    setSuccess('Signature captured successfully');
+    setTimeout(() => setSuccess(null), 3000);
   };
 
   const isFinalized = currentReport?.status === 'finalized';
