@@ -204,6 +204,7 @@ const SettingsPage: React.FC = () => {
       licenseNumber: newDoctor.licenseNumber || '',
       email: newDoctor.email!,
       phone: newDoctor.phone || '',
+      signature: newDoctor.signature || null,
     };
 
     setDoctors([...doctors, doctor]);
@@ -214,9 +215,21 @@ const SettingsPage: React.FC = () => {
       licenseNumber: '',
       email: '',
       phone: '',
+      signature: null,
     });
     setSuccess('Doctor added successfully');
     setTimeout(() => setSuccess(null), 3000);
+  };
+
+  const handleSignatureUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setNewDoctor({ ...newDoctor, signature: reader.result as string });
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleDeleteDoctor = (id: string) => {
