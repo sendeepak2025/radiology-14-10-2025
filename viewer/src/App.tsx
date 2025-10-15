@@ -12,6 +12,7 @@ import PatientsPage from './pages/patients/PatientsPage'
 import OrthancViewerPage from './pages/orthanc/OrthancViewerPage'
 import MachinesDashboard from './pages/machines/MachinesDashboard'
 import EnhancedDashboard from './pages/dashboard/EnhancedDashboard'
+import SettingsPage from './pages/settings/SettingsPage'
 
 // Simple pages without complex dependencies
 const LoginPage = React.lazy(() => import('./pages/auth/LoginPage'))
