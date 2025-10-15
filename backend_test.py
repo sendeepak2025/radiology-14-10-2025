@@ -68,61 +68,38 @@ class MachineManagementTestSuite:
             if details:
                 print(f"   Details: {details}")
 
-    def test_orthanc_rest_api_direct(self) -> bool:
-        """Test 1: Verify Orthanc PACS server is running and accessible via REST API"""
+    def test_backend_server_health(self) -> bool:
+        """Test 1: Verify backend server is running and healthy"""
         try:
-            # Test basic auth
-            auth = (self.orthanc_username, self.orthanc_password)
-            
-            # Test system endpoint
-            response = requests.get(f"{self.orthanc_url}/system", auth=auth, timeout=10)
+            response = requests.get(f"{self.backend_url}/", timeout=10)
             
             if response.status_code == 200:
-                system_info = response.json()
-                version = system_info.get("Version", "Unknown")
-                name = system_info.get("Name", "Unknown")
-                
-                # Check expected version
-                expected_version = "1.10.1"
-                version_match = version == expected_version
-                
                 self.log_test_result(
-                    "Orthanc REST API Direct Access",
+                    "Backend Server Health",
                     True,
-                    f"Orthanc accessible - Version: {version}, Name: {name}",
+                    "Backend server is running and responding",
                     {
-                        "version": version,
-                        "name": name,
-                        "expected_version": expected_version,
-                        "version_match": version_match,
-                        "url": f"{self.orthanc_url}/system"
+                        "status_code": response.status_code,
+                        "response_length": len(response.text),
+                        "endpoint": "/"
                     }
                 )
-                
-                if not version_match:
-                    self.log_test_result(
-                        "Orthanc Version Check",
-                        False,
-                        f"Version mismatch - Expected: {expected_version}, Got: {version}",
-                        {"expected": expected_version, "actual": version}
-                    )
-                
                 return True
             else:
                 self.log_test_result(
-                    "Orthanc REST API Direct Access",
+                    "Backend Server Health",
                     False,
-                    f"HTTP {response.status_code}: {response.text}",
-                    {"status_code": response.status_code, "response": response.text}
+                    f"Backend server unhealthy - HTTP {response.status_code}",
+                    {"status_code": response.status_code}
                 )
                 return False
                 
         except Exception as e:
             self.log_test_result(
-                "Orthanc REST API Direct Access",
+                "Backend Server Health",
                 False,
-                f"Connection failed: {str(e)}",
-                {"error": str(e), "url": self.orthanc_url}
+                f"Backend server not accessible: {str(e)}",
+                {"error": str(e)}
             )
             return False
 
