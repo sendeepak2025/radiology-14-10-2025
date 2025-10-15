@@ -16,11 +16,19 @@ const { getHealthChecker } = require('./services/health-checker');
 const { getAlertManager } = require('./services/alert-manager');
 const AdminActionLogger = require('./services/admin-action-logger');
 
+const { sanitizeInput, rateLimiter } = require('./middleware/validation');
+
 const app = express();
 app.use(cors());
 app.use(express.json({ limit: '20mb' }));
 app.use(morgan('dev'));
 app.use(cookieParser());
+
+// Input sanitization middleware - applied early
+app.use(sanitizeInput);
+
+// Rate limiting middleware
+app.use(rateLimiter);
 
 // Audit middleware - must be early in the middleware chain
 app.use(logRequest());
