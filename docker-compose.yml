@@ -1,0 +1,132 @@
+# Docker Compose for Medical Imaging PACS System
+# One-command deployment: docker-compose up -d
+
+version: '3.8'
+
+services:
+  # Frontend - React/Vite Medical Viewer
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: pacs-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_BACKEND_URL=${BACKEND_URL:-http://localhost:8001}
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - pacs-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+  # Backend - Node.js/Express API
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: pacs-backend
+    ports:
+      - "8001:8001"
+    environment:
+      # MongoDB Configuration
+      - MONGODB_URI=${MONGODB_URI}
+      
+      # Cloudinary Configuration
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+      
+      # Orthanc Configuration
+      - ORTHANC_URL=http://orthanc:8042
+      - ORTHANC_USERNAME=orthanc
+      - ORTHANC_PASSWORD=orthanc
+      - ENABLE_ORTHANC_PREVIEW=true
+      
+      # AI Service Configuration
+      - AI_SERVICE_URL=http://ai-service:8002
+      
+      # Security
+      - JWT_SECRET=${JWT_SECRET:-change-this-in-production}
+      - SESSION_SECRET=${SESSION_SECRET:-change-this-in-production}
+      
+      # Emergent LLM Key
+      - EMERGENT_LLM_KEY=${EMERGENT_LLM_KEY}
+      
+      # Anonymization
+      - ANONYMIZATION_SALT=${ANONYMIZATION_SALT:-your-random-salt}
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY:-your-encryption-key}
+    depends_on:
+      - orthanc
+      - ai-service
+    restart: unless-stopped
+    networks:
+      - pacs-network
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8001/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 30s
+
+  # AI Detection Service - Python/FastAPI with Gemini 2.0
+  ai-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.ai-service
+    container_name: pacs-ai-service
+    ports:
+      - "8002:8002"
+    environment:
+      - EMERGENT_LLM_KEY=${EMERGENT_LLM_KEY}
+      - ORTHANC_URL=http://orthanc:8042
+      - ORTHANC_USERNAME=orthanc
+      - ORTHANC_PASSWORD=orthanc
+      - MONGODB_URI=${MONGODB_URI}
+    restart: unless-stopped
+    networks:
+      - pacs-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8002/health')"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 30s
+
+  # Orthanc PACS Server - DICOM Storage and Communication
+  orthanc:
+    image: orthancteam/orthanc:24.5.3
+    container_name: pacs-orthanc
+    ports:
+      - "4242:4242"  # DICOM protocol (C-STORE, C-FIND, C-MOVE)
+      - "8042:8042"  # HTTP REST API and Web UI
+    volumes:
+      - orthanc-data:/var/lib/orthanc/db
+      - ./deployment/orthanc-config:/etc/orthanc:ro
+    environment:
+      - ORTHANC_USERNAME=orthanc
+      - ORTHANC_PASSWORD=orthanc
+    restart: unless-stopped
+    networks:
+      - pacs-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8042/system"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  # Persistent storage for Orthanc DICOM database
+  orthanc-data:
+    driver: local
+
+networks:
+  pacs-network:
+    driver: bridge
