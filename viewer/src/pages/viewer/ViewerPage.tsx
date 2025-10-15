@@ -63,6 +63,15 @@ const ViewerPage: React.FC = () => {
   const [patientContext, setPatientContext] = useState<any>(null)
   const [activeTab, setActiveTab] = useState(0)
   const [viewerType, setViewerType] = useState<'legacy' | 'cornerstone3d'>('legacy')
+  
+  // AI Detection state
+  const [aiPanelOpen, setAiPanelOpen] = useState(false)
+  const [aiAnalysis, setAiAnalysis] = useState<AIAnalysisHistory | null>(null)
+  const [hasAiAnalysis, setHasAiAnalysis] = useState(false)
+  const [aiLoading, setAiLoading] = useState(false)
+  const [snackbarOpen, setSnackbarOpen] = useState(false)
+  const [snackbarMessage, setSnackbarMessage] = useState('')
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success')
 
   // Load study data from DICOM API
   useEffect(() => {
