@@ -31,9 +31,11 @@ import {
   Settings as SettingsIcon,
   QrCode as QrCodeIcon,
   Cable as CableIcon,
-  Delete as DeleteIcon
+  Delete as DeleteIcon,
+  ArrowBack as ArrowBackIcon
 } from '@mui/icons-material';
 import { Helmet } from 'react-helmet-async';
+import { useNavigate } from 'react-router-dom';
 import machineService, { type Machine } from '../../services/machineService';
 import AddMachineDialog from '../../components/machines/AddMachineDialog';
 import MachineDetailsDialog from '../../components/machines/MachineDetailsDialog';
