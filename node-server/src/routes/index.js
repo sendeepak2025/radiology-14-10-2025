@@ -135,4 +135,7 @@ router.use('/api/ai', aiDetectionRoutes);
 const machineRoutes = require('./machines');
 router.use('/api/machines', machineRoutes);
 
+// Error Logging API - Frontend error tracking and monitoring
+router.use('/api/errors', errorRoutes);
+
 module.exports = router;
