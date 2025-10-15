@@ -1,8 +1,8 @@
 {
   "total_tests": 9,
-  "passed_tests": 8,
-  "failed_tests": 1,
-  "success_rate": 88.88888888888889,
+  "passed_tests": 9,
+  "failed_tests": 0,
+  "success_rate": 100.0,
   "critical_issues": 0,
   "all_results": [
     {
@@ -14,7 +14,7 @@
         "response_length": 78,
         "endpoint": "/"
       },
-      "timestamp": "2025-10-15 08:05:30"
+      "timestamp": "2025-10-15 08:07:23"
     },
     {
       "test": "Orthanc REST API Direct Access",
@@ -27,7 +27,7 @@
         "version_match": true,
         "url": "http://localhost:8042/system"
       },
-      "timestamp": "2025-10-15 08:05:30"
+      "timestamp": "2025-10-15 08:07:23"
     },
     {
       "test": "Backend PACS Connectivity Test",
@@ -39,12 +39,12 @@
           "success": true,
           "data": {
             "connected": true,
-            "timestamp": "2025-10-15T08:05:30.944Z"
+            "timestamp": "2025-10-15T08:07:23.728Z"
           }
         },
         "endpoint": "/api/pacs/test"
       },
-      "timestamp": "2025-10-15 08:05:30"
+      "timestamp": "2025-10-15 08:07:23"
     },
     {
       "test": "Orthanc Studies Direct Access",
@@ -57,27 +57,76 @@
         "studies": [],
         "expected_test_studies": []
       },
-      "timestamp": "2025-10-15 08:05:30"
+      "timestamp": "2025-10-15 08:07:23"
     },
     {
       "test": "Backend PACS Studies Endpoint",
-      "success": false,
-      "message": "Retrieved 0 studies from backend PACS endpoint, 0 match expected",
+      "success": true,
+      "message": "Retrieved 9 studies from backend PACS endpoint, 0 match expected",
       "details": {
-        "total_studies": 0,
+        "total_studies": 9,
         "expected_matches": 0,
         "endpoint": "/api/pacs/studies",
-        "sample_studies": []
+        "sample_studies": [
+          {
+            "studyInstanceUID": "1.2.826.0.1.3680043.8.498.62890927137330289829683257517594199782",
+            "studyDate": "20251015",
+            "studyTime": "075735",
+            "patientName": "John^Doe",
+            "patientID": "PID1760515055",
+            "patientBirthDate": "19800101",
+            "patientSex": "M",
+            "modality": "OT",
+            "studyDescription": "CT Chest with Contrast",
+            "numberOfSeries": 1,
+            "numberOfInstances": 1,
+            "orthancStudyId": "38f0e6bd-f358c9e7-57ef0279-fc5681b0-1d5470be",
+            "source": "pacs",
+            "lastSyncDate": "2025-10-15T08:07:23.758Z"
+          },
+          {
+            "studyInstanceUID": "1.2.826.0.1.3680043.8.498.86809438293149911932237862764238610785",
+            "studyDate": "20251015",
+            "studyTime": "075738",
+            "patientName": "Jane^Smith",
+            "patientID": "PID1760515058",
+            "patientBirthDate": "19800101",
+            "patientSex": "M",
+            "modality": "OT",
+            "studyDescription": "MRI Brain",
+            "numberOfSeries": 1,
+            "numberOfInstances": 1,
+            "orthancStudyId": "1f67a651-3d8d1ad1-a7d6b922-9d98366e-f9c40ca7",
+            "source": "pacs",
+            "lastSyncDate": "2025-10-15T08:07:23.759Z"
+          },
+          {
+            "studyInstanceUID": "1.2.826.0.1.3680043.8.498.56198951532115613182605265702140845561",
+            "studyDate": "20251015",
+            "studyTime": "075740",
+            "patientName": "Bob^Wilson",
+            "patientID": "PID1760515060",
+            "patientBirthDate": "19800101",
+            "patientSex": "M",
+            "modality": "OT",
+            "studyDescription": "Chest X-Ray",
+            "numberOfSeries": 1,
+            "numberOfInstances": 1,
+            "orthancStudyId": "a64c90dc-a162200b-6d18e862-a8f36b89-25668dee",
+            "source": "pacs",
+            "lastSyncDate": "2025-10-15T08:07:23.758Z"
+          }
+        ]
       },
-      "timestamp": "2025-10-15 08:05:30"
+      "timestamp": "2025-10-15 08:07:23"
     },
     {
       "test": "Backend Database Studies Endpoint",
       "success": true,
-      "message": "Retrieved 66 studies from database, 3 match expected test data",
+      "message": "Retrieved 72 studies from database, 0 match expected test data",
       "details": {
-        "total_studies": 66,
-        "expected_matches": 3,
+        "total_studies": 72,
+        "expected_matches": 0,
         "endpoint": "/api/dicom/studies",
         "sample_studies": [
           {
@@ -118,18 +167,20 @@
           }
         ]
       },
-      "timestamp": "2025-10-15 08:05:33"
+      "timestamp": "2025-10-15 08:07:27"
     },
     {
       "test": "Unified Studies Endpoint",
       "success": true,
-      "message": "Retrieved 66 unified studies, 3 match expected test data",
+      "message": "Retrieved 72 unified studies, 0 match expected test data",
       "details": {
-        "total_studies": 66,
+        "total_studies": 72,
         "sources": {
-          "database": 66
+          "database": 63,
+          "merged": 3,
+          "pacs": 6
         },
-        "expected_matches": 3,
+        "expected_matches": 0,
         "endpoint": "/api/pacs/unified-studies",
         "sample_studies": [
           {
@@ -170,7 +221,7 @@
           }
         ]
       },
-      "timestamp": "2025-10-15 08:05:35"
+      "timestamp": "2025-10-15 08:07:29"
     },
     {
       "test": "Webhook Integration Accessibility",
@@ -190,7 +241,7 @@
           "synced": false
         }
       },
-      "timestamp": "2025-10-15 08:05:36"
+      "timestamp": "2025-10-15 08:07:30"
     },
     {
       "test": "PACS Sync Functionality",
@@ -200,28 +251,15 @@
         "response": {
           "success": true,
           "data": {
-            "syncedCount": 0,
+            "syncedCount": 9,
             "errorCount": 0
           }
         },
         "endpoint": "/api/pacs/sync"
       },
-      "timestamp": "2025-10-15 08:05:36"
+      "timestamp": "2025-10-15 08:07:34"
     }
   ],
-  "failed_results": [
-    {
-      "test": "Backend PACS Studies Endpoint",
-      "success": false,
-      "message": "Retrieved 0 studies from backend PACS endpoint, 0 match expected",
-      "details": {
-        "total_studies": 0,
-        "expected_matches": 0,
-        "endpoint": "/api/pacs/studies",
-        "sample_studies": []
-      },
-      "timestamp": "2025-10-15 08:05:30"
-    }
-  ],
+  "failed_results": [],
   "critical_failures": []
 }
