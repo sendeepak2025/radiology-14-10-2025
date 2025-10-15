@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-DICOM PACS Integration Backend Test Suite
-Tests the complete Phase 1 DICOM PACS integration pipeline
+Machine Management System Backend Test Suite
+Tests the Machine Management API endpoints
 """
 
 import requests
@@ -10,7 +10,7 @@ import time
 import base64
 from typing import Dict, List, Optional, Tuple
 
-class DICOMPACSTestSuite:
+class MachineManagementTestSuite:
     def __init__(self):
         # Configuration from review request
         self.backend_url = "http://localhost:8001"
