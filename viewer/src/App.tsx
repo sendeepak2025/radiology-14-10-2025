@@ -415,6 +415,16 @@ function App() {
             }
           />
 
+          {/* Settings - Organization & User Management */}
+          <Route
+            path="/settings"
+            element={
+              <SimpleProtectedRoute>
+                <SettingsPage />
+              </SimpleProtectedRoute>
+            }
+          />
+
           {/* Default redirect */}
           <Route
             path="/"
