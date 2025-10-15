@@ -456,12 +456,41 @@ const ReportEditor: React.FC<ReportEditorProps> = ({
                 <Typography>{impression}</Typography>
               </>
             )}
+            {reportSignature && (
+              <>
+                <Divider sx={{ my: 2 }} />
+                <Typography variant="subtitle2">SIGNATURE:</Typography>
+                <Box
+                  component="img"
+                  src={reportSignature}
+                  alt="Digital Signature"
+                  sx={{
+                    maxWidth: 200,
+                    border: '1px solid',
+                    borderColor: 'divider',
+                    borderRadius: 1,
+                    mt: 1,
+                  }}
+                />
+              </>
+            )}
           </Box>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setPreviewOpen(false)}>Close</Button>
         </DialogActions>
       </Dialog>
+
+      {/* Signature Capture Dialog */}
+      <SignatureCapture
+        open={signatureDialogOpen}
+        onClose={() => setSignatureDialogOpen(false)}
+        onSave={handleSignatureSave}
+        reportInfo={{
+          patientName: studyInfo?.patientName,
+          studyDate: studyInfo?.studyDate,
+        }}
+      />
     </Box>
   );
 };
