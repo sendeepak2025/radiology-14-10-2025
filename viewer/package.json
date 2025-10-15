@@ -23,7 +23,7 @@
     "@cornerstonejs/tools": "^1.86.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@kitware/vtk.js": "^34.13.1",
+    "@kitware/vtk.js": "30.4.1",
     "@mui/icons-material": "^5.14.3",
     "@mui/lab": "^5.0.0-alpha.140",
     "@mui/material": "^5.14.5",
