@@ -42,6 +42,8 @@ import {
   Business as BusinessIcon,
   Person as PersonIcon,
   People as PeopleIcon,
+  Check as CheckIcon,
+  Image as ImageIcon,
 } from '@mui/icons-material';
 import { Helmet } from 'react-helmet-async';
 
