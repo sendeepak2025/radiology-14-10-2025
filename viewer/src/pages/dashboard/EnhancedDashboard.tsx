@@ -117,7 +117,7 @@ const EnhancedDashboard: React.FC = () => {
       <Box
         sx={{
           minHeight: '100vh',
-          background: 'linear-gradient(135deg, #0a0e27 0%, #111827 100%)',
+          backgroundColor: '#F5F5F7',
           p: 4,
         }}
       >
@@ -127,15 +127,13 @@ const EnhancedDashboard: React.FC = () => {
             variant="h3"
             sx={{
               fontWeight: 700,
-              background: 'linear-gradient(135deg, #00b4d8 0%, #8338ec 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
+              color: '#000000',
               mb: 1,
             }}
           >
             Medical Imaging Dashboard
           </Typography>
-          <Typography variant="body1" color="text.secondary">
+          <Typography variant="body1" sx={{ color: '#6E6E73' }}>
             Advanced radiology workflow management
           </Typography>
         </Box>
@@ -144,20 +142,25 @@ const EnhancedDashboard: React.FC = () => {
         <Grid container spacing={3} sx={{ mb: 6 }}>
           <Grid item xs={12} md={4}>
             <Card
-              className="glass interactive-card"
               sx={{
-                background: 'linear-gradient(135deg, rgba(0, 180, 216, 0.1) 0%, rgba(0, 119, 182, 0.1) 100%)',
-                border: '1px solid rgba(0, 180, 216, 0.3)',
+                backgroundColor: '#FFFFFF',
+                border: '1px solid rgba(0, 0, 0, 0.06)',
                 borderRadius: 3,
+                boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.08)',
+                transition: 'all 0.2s ease-in-out',
+                '&:hover': {
+                  boxShadow: '0 4px 12px -2px rgba(0, 0, 0, 0.12)',
+                  transform: 'translateY(-2px)',
+                },
               }}
             >
               <CardContent>
                 <Stack direction="row" justifyContent="space-between" alignItems="center">
                   <Box>
-                    <Typography variant="h4" fontWeight="700" sx={{ mb: 1 }}>
+                    <Typography variant="h4" fontWeight="700" sx={{ mb: 1, color: '#000000' }}>
                       {stats.totalPatients}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant="body2" sx={{ color: '#6E6E73' }}>
                       Total Patients
                     </Typography>
                   </Box>
@@ -165,8 +168,8 @@ const EnhancedDashboard: React.FC = () => {
                     sx={{
                       width: 64,
                       height: 64,
-                      background: 'linear-gradient(135deg, #00b4d8 0%, #0077b6 100%)',
-                      boxShadow: '0 8px 24px rgba(0, 180, 216, 0.3)',
+                      backgroundColor: '#007AFF',
+                      boxShadow: '0 2px 8px rgba(0, 122, 255, 0.25)',
                     }}
                   >
                     <PeopleIcon sx={{ fontSize: 32 }} />
@@ -178,20 +181,25 @@ const EnhancedDashboard: React.FC = () => {
 
           <Grid item xs={12} md={4}>
             <Card
-              className="glass interactive-card"
               sx={{
-                background: 'linear-gradient(135deg, rgba(131, 56, 236, 0.1) 0%, rgba(109, 40, 217, 0.1) 100%)',
-                border: '1px solid rgba(131, 56, 236, 0.3)',
+                backgroundColor: '#FFFFFF',
+                border: '1px solid rgba(0, 0, 0, 0.06)',
                 borderRadius: 3,
+                boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.08)',
+                transition: 'all 0.2s ease-in-out',
+                '&:hover': {
+                  boxShadow: '0 4px 12px -2px rgba(0, 0, 0, 0.12)',
+                  transform: 'translateY(-2px)',
+                },
               }}
             >
               <CardContent>
                 <Stack direction="row" justifyContent="space-between" alignItems="center">
                   <Box>
-                    <Typography variant="h4" fontWeight="700" sx={{ mb: 1 }}>
+                    <Typography variant="h4" fontWeight="700" sx={{ mb: 1, color: '#000000' }}>
                       {stats.totalStudies}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant="body2" sx={{ color: '#6E6E73' }}>
                       Total Studies
                     </Typography>
                   </Box>
@@ -199,8 +207,8 @@ const EnhancedDashboard: React.FC = () => {
                     sx={{
                       width: 64,
                       height: 64,
-                      background: 'linear-gradient(135deg, #8338ec 0%, #6d28d9 100%)',
-                      boxShadow: '0 8px 24px rgba(131, 56, 236, 0.3)',
+                      backgroundColor: '#5856D6',
+                      boxShadow: '0 2px 8px rgba(88, 86, 214, 0.25)',
                     }}
                   >
                     <ScienceIcon sx={{ fontSize: 32 }} />
@@ -212,20 +220,25 @@ const EnhancedDashboard: React.FC = () => {
 
           <Grid item xs={12} md={4}>
             <Card
-              className="glass interactive-card"
               sx={{
-                background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%)',
-                border: '1px solid rgba(16, 185, 129, 0.3)',
+                backgroundColor: '#FFFFFF',
+                border: '1px solid rgba(0, 0, 0, 0.06)',
                 borderRadius: 3,
+                boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.08)',
+                transition: 'all 0.2s ease-in-out',
+                '&:hover': {
+                  boxShadow: '0 4px 12px -2px rgba(0, 0, 0, 0.12)',
+                  transform: 'translateY(-2px)',
+                },
               }}
             >
               <CardContent>
                 <Stack direction="row" justifyContent="space-between" alignItems="center">
                   <Box>
-                    <Typography variant="h4" fontWeight="700" sx={{ mb: 1 }}>
+                    <Typography variant="h4" fontWeight="700" sx={{ mb: 1, color: '#000000' }}>
                       {stats.todayStudies}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant="body2" sx={{ color: '#6E6E73' }}>
                       Today's Studies
                     </Typography>
                   </Box>
@@ -233,8 +246,8 @@ const EnhancedDashboard: React.FC = () => {
                     sx={{
                       width: 64,
                       height: 64,
-                      background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                      boxShadow: '0 8px 24px rgba(16, 185, 129, 0.3)',
+                      backgroundColor: '#34C759',
+                      boxShadow: '0 2px 8px rgba(52, 199, 89, 0.25)',
                     }}
                   >
                     <TrendingUpIcon sx={{ fontSize: 32 }} />
@@ -247,10 +260,16 @@ const EnhancedDashboard: React.FC = () => {
 
         {/* Quick Actions */}
         <Paper
-          className="glass"
-          sx={{ p: 4, mb: 6, borderRadius: 3 }}
+          sx={{
+            p: 4,
+            mb: 6,
+            borderRadius: 3,
+            backgroundColor: '#FFFFFF',
+            border: '1px solid rgba(0, 0, 0, 0.06)',
+            boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.08)',
+          }}
         >
-          <Typography variant="h5" fontWeight="600" sx={{ mb: 3 }}>
+          <Typography variant="h5" fontWeight="600" sx={{ mb: 3, color: '#000000' }}>
             Quick Actions
           </Typography>
           <Grid container spacing={2}>
@@ -263,9 +282,9 @@ const EnhancedDashboard: React.FC = () => {
                 onClick={() => navigate('/dashboard')}
                 sx={{
                   py: 2,
-                  background: 'linear-gradient(135deg, #00b4d8 0%, #0077b6 100%)',
+                  backgroundColor: '#007AFF',
                   '&:hover': {
-                    background: 'linear-gradient(135deg, #48cae4 0%, #00b4d8 100%)',
+                    backgroundColor: '#0051D5',
                   },
                 }}
               >
@@ -312,17 +331,22 @@ const EnhancedDashboard: React.FC = () => {
 
         {/* Recent Studies */}
         <Paper
-          className="glass"
-          sx={{ p: 4, borderRadius: 3 }}
+          sx={{
+            p: 4,
+            borderRadius: 3,
+            backgroundColor: '#FFFFFF',
+            border: '1px solid rgba(0, 0, 0, 0.06)',
+            boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.08)',
+          }}
         >
           <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 3 }}>
-            <Typography variant="h5" fontWeight="600">
+            <Typography variant="h5" fontWeight="600" sx={{ color: '#000000' }}>
               Recent Studies
             </Typography>
             <Button
               size="small"
               onClick={() => navigate('/dashboard')}
-              sx={{ textTransform: 'none' }}
+              sx={{ textTransform: 'none', color: '#007AFF' }}
             >
               View All →
             </Button>
@@ -332,37 +356,44 @@ const EnhancedDashboard: React.FC = () => {
             {recentStudies.map((study) => (
               <Grid item xs={12} sm={6} md={4} key={study.studyInstanceUID}>
                 <Card
-                  className="glass-light interactive-card"
                   sx={{
                     cursor: 'pointer',
                     borderRadius: 2,
+                    backgroundColor: '#FFFFFF',
+                    border: '1px solid rgba(0, 0, 0, 0.06)',
+                    boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)',
+                    transition: 'all 0.2s ease-in-out',
+                    '&:hover': {
+                      boxShadow: '0 4px 12px -2px rgba(0, 0, 0, 0.12)',
+                      transform: 'translateY(-2px)',
+                    },
                   }}
                   onClick={() => navigate(`/viewer/${study.studyInstanceUID}`)}
                 >
                   <CardContent>
                     <Stack spacing={2}>
                       <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
-                        <Typography variant="subtitle1" fontWeight="600" noWrap>
+                        <Typography variant="subtitle1" fontWeight="600" noWrap sx={{ color: '#000000' }}>
                           {study.patientName || 'Unknown'}
                         </Typography>
                         <Chip
                           label={study.modality}
                           size="small"
                           sx={{
-                            background: 'linear-gradient(135deg, rgba(0, 180, 216, 0.2) 0%, rgba(0, 119, 182, 0.2) 100%)',
-                            border: '1px solid rgba(0, 180, 216, 0.3)',
+                            backgroundColor: 'rgba(0, 122, 255, 0.1)',
+                            color: '#007AFF',
                           }}
                         />
                       </Stack>
                       
                       <Stack direction="row" spacing={1} alignItems="center">
-                        <CalendarIcon sx={{ fontSize: 16, color: 'text.secondary' }} />
-                        <Typography variant="caption" color="text.secondary">
+                        <CalendarIcon sx={{ fontSize: 16, color: '#6E6E73' }} />
+                        <Typography variant="caption" sx={{ color: '#6E6E73' }}>
                           {formatDate(study.studyDate)}
                         </Typography>
                       </Stack>
 
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography variant="caption" sx={{ color: '#6E6E73' }}>
                         {study.numberOfInstances || 0} images
                       </Typography>
                     </Stack>
