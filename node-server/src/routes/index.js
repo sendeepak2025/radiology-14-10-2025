@@ -142,4 +142,8 @@ router.use('/api/errors', errorRoutes);
 const healthMonitoringRoutes = require('./health-monitoring');
 router.use('/api/health', healthMonitoringRoutes);
 
+// Studies Pagination API - Optimized paginated study retrieval
+const studiesPaginationRoutes = require('./studies-pagination');
+router.use('/api/studies', studiesPaginationRoutes);
+
 module.exports = router;
