@@ -326,6 +326,22 @@ const PatientsPage: React.FC = () => {
               >
                 All Studies
               </Button>
+              <Divider sx={{ my: 1 }} />
+              <Button
+                fullWidth
+                startIcon={<Computer />}
+                onClick={() => navigate('/machines')}
+                variant="text"
+                sx={{
+                  justifyContent: "flex-start",
+                  py: 1.5,
+                  px: 2,
+                  textTransform: "none",
+                  fontWeight: 400,
+                }}
+              >
+                Machines
+              </Button>
             </Stack>
           </Box>
 
