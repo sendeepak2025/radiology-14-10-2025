@@ -38,4 +38,8 @@ router.get('/by-modality/:modality', validatePagination, getStudiesByModality);
 // GET /api/studies/stats - Get study statistics
 router.get('/stats', getStudyStats);
 
+// GET /api/studies/:studyInstanceUID/reports - Get reports for a study
+const { getReportsByStudy } = require('../controllers/reportController');
+router.get('/:studyInstanceUID/reports', getReportsByStudy);
+
 module.exports = router;
