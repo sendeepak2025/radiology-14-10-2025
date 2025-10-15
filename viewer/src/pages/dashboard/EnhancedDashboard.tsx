@@ -28,6 +28,7 @@ import {
   TrendingUp as TrendingUpIcon,
   FolderOpen as FolderOpenIcon,
   CalendarToday as CalendarIcon,
+  Settings as SettingsIcon,
 } from "@mui/icons-material"
 import { Helmet } from "react-helmet-async"
 import { useNavigate } from "react-router-dom"
