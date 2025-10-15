@@ -394,6 +394,16 @@ function App() {
             }
           />
 
+          {/* Machines Dashboard - Manage medical imaging machines */}
+          <Route
+            path="/machines"
+            element={
+              <SimpleProtectedRoute>
+                <MachinesDashboard />
+              </SimpleProtectedRoute>
+            }
+          />
+
           {/* Default redirect */}
           <Route
             path="/"
