@@ -1,75 +1,96 @@
 backend:
   - task: "Orthanc PACS server connectivity"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/node-server/src/services/orthanc-study-service.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "testing"
         comment: "Initial test setup - needs verification of Orthanc connectivity"
+      - working: true
+        agent: "testing"
+        comment: "✅ PASS - Orthanc PACS server accessible at localhost:8042, Version 1.10.1 confirmed, authentication working with orthanc/orthanc credentials"
 
   - task: "DICOM C-ECHO connectivity test"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/node-server/src/routes/pacs.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "testing"
         comment: "Initial test setup - needs verification of PACS test endpoint"
+      - working: true
+        agent: "testing"
+        comment: "✅ PASS - Backend PACS connectivity test endpoint (/api/pacs/test) working correctly, returns connected: true"
 
   - task: "Webhook integration (Orthanc → Backend)"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/node-server/src/routes/orthanc-webhook.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "testing"
         comment: "Initial test setup - needs verification of webhook processing"
+      - working: true
+        agent: "testing"
+        comment: "✅ PASS - Webhook endpoints accessible (/api/orthanc/new-instance, /api/orthanc/sync-status), Orthanc configured with OnStoredInstance callback to localhost:8001"
 
   - task: "Studies database integration"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/node-server/src/controllers/studyController.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "testing"
         comment: "Initial test setup - needs verification of study data retrieval"
+      - working: true
+        agent: "testing"
+        comment: "✅ PASS - Database studies endpoint (/api/dicom/studies) working, retrieved 72 studies from MongoDB, includes expected test patients (John^Doe, Jane^Smith, Bob^Wilson)"
 
   - task: "PACS studies API endpoint"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/node-server/src/routes/pacs.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "testing"
         comment: "Initial test setup - needs verification of PACS studies endpoint"
+      - working: false
+        agent: "testing"
+        comment: "❌ FAIL - Backend trying to use /simplified-tags endpoint that doesn't exist in Orthanc 1.10.1"
+      - working: true
+        agent: "testing"
+        comment: "✅ PASS - Fixed Orthanc API compatibility issue, now retrieving 9 studies from PACS endpoint (/api/pacs/studies), includes all expected test studies"
 
   - task: "Unified studies API (Database + PACS)"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/node-server/src/services/orthanc-study-service.js"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "testing"
         comment: "Initial test setup - needs verification of unified studies functionality"
+      - working: true
+        agent: "testing"
+        comment: "✅ PASS - Unified studies endpoint (/api/pacs/unified-studies) working, merging 72 database studies with 9 PACS studies successfully"
 
 frontend:
   - task: "DICOM Viewer Interface"
