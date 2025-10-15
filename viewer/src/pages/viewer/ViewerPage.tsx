@@ -150,6 +150,82 @@ const ViewerPage: React.FC = () => {
     loadStudyData()
   }, [studyInstanceUID])
 
+  // Check for existing AI analysis
+  useEffect(() => {
+    const checkAiAnalysis = async () => {
+      if (!studyInstanceUID) return
+      
+      try {
+        const analysis = await aiDetectionService.getLatestAnalysis(studyInstanceUID)
+        if (analysis) {
+          setHasAiAnalysis(true)
+          setAiAnalysis(analysis)
+        }
+      } catch (error) {
+        console.log('No existing AI analysis found')
+      }
+    }
+
+    checkAiAnalysis()
+  }, [studyInstanceUID])
+
+  // AI Analysis handlers
+  const handleAiAnalyze = async (studyUid: string) => {
+    try {
+      setAiLoading(true)
+      const result = await aiDetectionService.analyzeStudy(studyUid)
+      
+      // Fetch the full analysis with review status
+      const analysis = await aiDetectionService.getLatestAnalysis(studyUid)
+      if (analysis) {
+        setAiAnalysis(analysis)
+        setHasAiAnalysis(true)
+        setAiPanelOpen(true)
+        setSnackbarMessage('AI analysis completed successfully!')
+        setSnackbarSeverity('success')
+        setSnackbarOpen(true)
+      }
+    } catch (error) {
+      console.error('AI analysis error:', error)
+      setSnackbarMessage('AI analysis failed. Please try again.')
+      setSnackbarSeverity('error')
+      setSnackbarOpen(true)
+    } finally {
+      setAiLoading(false)
+    }
+  }
+
+  const handleAiAnalysisComplete = () => {
+    setAiPanelOpen(true)
+  }
+
+  const handleUpdateReview = async (status: 'confirmed' | 'rejected' | 'modified', notes: string) => {
+    if (!aiAnalysis) return
+
+    try {
+      const updated = await aiDetectionService.updateReviewStatus(
+        aiAnalysis.analysisId,
+        {
+          reviewStatus: status,
+          radiologistNotes: notes,
+          reviewedBy: user?.firstName && user?.lastName 
+            ? `${user.firstName} ${user.lastName}`
+            : 'Current User'
+        }
+      )
+      
+      setAiAnalysis(updated)
+      setSnackbarMessage(`Analysis ${status} successfully!`)
+      setSnackbarSeverity('success')
+      setSnackbarOpen(true)
+    } catch (error) {
+      console.error('Review update error:', error)
+      setSnackbarMessage('Failed to update review status')
+      setSnackbarSeverity('error')
+      setSnackbarOpen(true)
+    }
+  }
+
   if (isLoading || !studyInstanceUID) {
     return (
       <>
