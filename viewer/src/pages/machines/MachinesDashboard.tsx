@@ -41,6 +41,7 @@ import AddMachineDialog from '../../components/machines/AddMachineDialog';
 import MachineDetailsDialog from '../../components/machines/MachineDetailsDialog';
 
 const MachinesDashboard: React.FC = () => {
+  const navigate = useNavigate();
   const [machines, setMachines] = useState<Machine[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
