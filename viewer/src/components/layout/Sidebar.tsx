@@ -20,6 +20,7 @@ import {
   Person,
   Analytics,
   People,
+  Computer,
 } from '@mui/icons-material'
 import { useAppSelector } from '../../store/hooks'
 import { selectSidebarOpen, selectSidebarWidth } from '../../store/slices/uiSlice'
