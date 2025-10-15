@@ -112,16 +112,13 @@ metadata:
   run_ui: false
 
 test_plan:
-  current_focus:
-    - "Orthanc PACS server connectivity"
-    - "DICOM C-ECHO connectivity test"
-    - "Webhook integration (Orthanc → Backend)"
-    - "Studies database integration"
-    - "PACS studies API endpoint"
+  current_focus: []
   stuck_tasks: []
-  test_all: false
-  test_priority: "high_first"
+  test_all: true
+  test_priority: "completed"
 
 agent_communication:
   - agent: "testing"
     message: "Starting Phase 1 DICOM PACS integration testing. Will verify Orthanc connectivity, webhook integration, and API endpoints as specified in review request."
+  - agent: "testing"
+    message: "✅ TESTING COMPLETE - All Phase 1 DICOM PACS integration tests passed (9/9). Fixed Orthanc API compatibility issue in orthanc-study-service.js. System is fully functional with Orthanc 1.10.1, all expected test studies present, webhook integration working, and all API endpoints operational."
