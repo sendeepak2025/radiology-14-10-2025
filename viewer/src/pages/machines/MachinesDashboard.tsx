@@ -167,13 +167,20 @@ const MachinesDashboard: React.FC = () => {
       <Box sx={{ p: 3 }}>
         {/* Header */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-          <Box>
-            <Typography variant="h4" gutterBottom>
-              My Machines
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Manage your medical imaging machines and monitor their status
-            </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Tooltip title="Back to Dashboard">
+              <IconButton onClick={() => navigate('/dashboard')} size="large">
+                <ArrowBackIcon />
+              </IconButton>
+            </Tooltip>
+            <Box>
+              <Typography variant="h4" gutterBottom>
+                My Machines
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Manage your medical imaging machines and monitor their status
+              </Typography>
+            </Box>
           </Box>
           <Box sx={{ display: 'flex', gap: 2 }}>
             <Tooltip title="Refresh">
