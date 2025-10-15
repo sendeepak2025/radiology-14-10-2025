@@ -955,6 +955,14 @@ const PatientsPage: React.FC = () => {
           <Typography variant="body2">{error}</Typography>
         </Alert>
       )}
+
+      {/* Study Comparison Viewer */}
+      <StudyComparisonViewer
+        open={comparisonOpen}
+        onClose={() => setComparisonOpen(false)}
+        studies={selectedStudiesForComparison}
+        onStudySelect={handleStudyClick}
+      />
     </>
   )
 }
