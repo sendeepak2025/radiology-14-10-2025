@@ -17,8 +17,21 @@ const { getAlertManager } = require('./services/alert-manager');
 const AdminActionLogger = require('./services/admin-action-logger');
 
 const { sanitizeInput, rateLimiter } = require('./middleware/validation');
+const compression = require('compression');
 
 const app = express();
+
+// Response compression middleware (gzip)
+app.use(compression({
+  filter: (req, res) => {
+    if (req.headers['x-no-compression']) {
+      return false;
+    }
+    return compression.filter(req, res);
+  },
+  level: 6, // Compression level (0-9, 6 is default)
+}));
+
 app.use(cors());
 app.use(express.json({ limit: '20mb' }));
 app.use(morgan('dev'));
