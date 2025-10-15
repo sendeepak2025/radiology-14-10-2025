@@ -126,4 +126,8 @@ router.use('/api/reports', structuredReportsRoutes);
 // Signature Upload API - Upload signatures to Cloudinary
 router.use('/api/signature', signatureRoutes);
 
+// AI Detection API - AI-powered medical image analysis
+const aiDetectionRoutes = require('./ai-detection');
+router.use('/api/ai', aiDetectionRoutes);
+
 module.exports = router;
