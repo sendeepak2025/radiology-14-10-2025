@@ -69,6 +69,8 @@ const ReportEditor: React.FC<ReportEditorProps> = ({
   const [success, setSuccess] = useState<string | null>(null);
   
   const [previewOpen, setPreviewOpen] = useState(false);
+  const [signatureDialogOpen, setSignatureDialogOpen] = useState(false);
+  const [reportSignature, setReportSignature] = useState<string | null>(null);
   const [currentReport, setCurrentReport] = useState<Report | null>(existingReport || null);
 
   // Load templates on mount
