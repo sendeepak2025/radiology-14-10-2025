@@ -4,9 +4,11 @@ import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import { ErrorBoundary } from 'react-error-boundary'
+import { ThemeProvider, CssBaseline } from '@mui/material'
 
 import App from './App'
 import { store } from './store'
+import { theme } from './theme/advancedTheme'
 import { LoadingScreen } from './components/ui/LoadingScreen'
 import { ErrorFallback } from './components/ui/ErrorFallback'
 import { errorLogger, ErrorSeverity } from './utils/errorLogger'
@@ -30,11 +32,14 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ErrorBoundary FallbackComponent={ErrorFallback} onError={handleError}>
       <HelmetProvider>
-        <Provider store={store}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </Provider>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Provider store={store}>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </Provider>
+        </ThemeProvider>
       </HelmetProvider>
     </ErrorBoundary>
   </React.StrictMode>,
