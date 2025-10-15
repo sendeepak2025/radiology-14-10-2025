@@ -25,9 +25,11 @@ import {
   Send as SendIcon,
   Preview as PreviewIcon,
   Close as CloseIcon,
+  Draw as DrawIcon,
 } from '@mui/icons-material';
 
 import reportService, { ReportTemplate, Report } from '../../services/reportService';
+import SignatureCapture from './SignatureCapture';
 
 interface ReportEditorProps {
   studyInstanceUID: string;
