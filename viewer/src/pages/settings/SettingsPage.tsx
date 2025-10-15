@@ -491,6 +491,7 @@ const SettingsPage: React.FC = () => {
                       <TableCell>License Number</TableCell>
                       <TableCell>Email</TableCell>
                       <TableCell>Phone</TableCell>
+                      <TableCell>Signature</TableCell>
                       <TableCell align="right">Actions</TableCell>
                     </TableRow>
                   </TableHead>
@@ -509,6 +510,22 @@ const SettingsPage: React.FC = () => {
                         <TableCell>{doctor.licenseNumber}</TableCell>
                         <TableCell>{doctor.email}</TableCell>
                         <TableCell>{doctor.phone}</TableCell>
+                        <TableCell>
+                          {doctor.signature ? (
+                            <Chip
+                              label="Uploaded"
+                              size="small"
+                              color="success"
+                              icon={<CheckIcon />}
+                            />
+                          ) : (
+                            <Chip
+                              label="No signature"
+                              size="small"
+                              variant="outlined"
+                            />
+                          )}
+                        </TableCell>
                         <TableCell align="right">
                           <IconButton size="small" color="error" onClick={() => handleDeleteDoctor(doctor.id)}>
                             <DeleteIcon />
