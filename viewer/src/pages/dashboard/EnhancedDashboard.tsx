@@ -274,13 +274,13 @@ const EnhancedDashboard: React.FC = () => {
             Quick Actions
           </Typography>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid item xs={12} sm={6} md={2.4}>
               <Button
                 fullWidth
                 variant="contained"
                 size="large"
                 startIcon={<SearchIcon />}
-                onClick={() => navigate('/dashboard')}
+                onClick={() => navigate('/patients')}
                 sx={{
                   py: 2,
                   backgroundColor: '#007AFF',
@@ -289,10 +289,10 @@ const EnhancedDashboard: React.FC = () => {
                   },
                 }}
               >
-                View All Studies
+                View Studies
               </Button>
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid item xs={12} sm={6} md={2.4}>
               <Button
                 fullWidth
                 variant="outlined"
@@ -303,7 +303,7 @@ const EnhancedDashboard: React.FC = () => {
                 Upload Study
               </Button>
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid item xs={12} sm={6} md={2.4}>
               <Button
                 fullWidth
                 variant="outlined"
@@ -312,10 +312,10 @@ const EnhancedDashboard: React.FC = () => {
                 onClick={() => navigate('/machines')}
                 sx={{ py: 2 }}
               >
-                Manage Machines
+                Machines
               </Button>
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid item xs={12} sm={6} md={2.4}>
               <Button
                 fullWidth
                 variant="outlined"
@@ -325,6 +325,18 @@ const EnhancedDashboard: React.FC = () => {
                 sx={{ py: 2 }}
               >
                 PACS Viewer
+              </Button>
+            </Grid>
+            <Grid item xs={12} sm={6} md={2.4}>
+              <Button
+                fullWidth
+                variant="outlined"
+                size="large"
+                startIcon={<SettingsIcon />}
+                onClick={() => navigate('/settings')}
+                sx={{ py: 2 }}
+              >
+                Settings
               </Button>
             </Grid>
           </Grid>
