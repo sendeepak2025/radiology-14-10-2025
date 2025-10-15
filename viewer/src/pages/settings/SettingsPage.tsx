@@ -646,6 +646,82 @@ const SettingsPage: React.FC = () => {
               value={newDoctor.phone}
               onChange={(e) => setNewDoctor({ ...newDoctor, phone: e.target.value })}
             />
+            
+            <Divider sx={{ my: 2 }} />
+            
+            {/* Signature Upload */}
+            <Box>
+              <Typography variant="subtitle2" sx={{ mb: 2, color: '#000000' }}>
+                Doctor's Signature
+              </Typography>
+              {newDoctor.signature ? (
+                <Stack spacing={2}>
+                  <Box
+                    sx={{
+                      border: '2px solid rgba(0, 122, 255, 0.3)',
+                      borderRadius: 2,
+                      p: 2,
+                      backgroundColor: 'rgba(0, 122, 255, 0.05)',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <img
+                      src={newDoctor.signature}
+                      alt="Doctor Signature"
+                      style={{
+                        maxWidth: '100%',
+                        maxHeight: '120px',
+                        objectFit: 'contain',
+                      }}
+                    />
+                  </Box>
+                  <Stack direction="row" spacing={2}>
+                    <Button
+                      variant="outlined"
+                      component="label"
+                      startIcon={<UploadIcon />}
+                      fullWidth
+                    >
+                      Change Signature
+                      <input
+                        type="file"
+                        hidden
+                        accept="image/*"
+                        onChange={handleSignatureUpload}
+                      />
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      onClick={() => setNewDoctor({ ...newDoctor, signature: null })}
+                    >
+                      Remove
+                    </Button>
+                  </Stack>
+                </Stack>
+              ) : (
+                <Button
+                  variant="outlined"
+                  component="label"
+                  startIcon={<ImageIcon />}
+                  fullWidth
+                  sx={{ py: 2 }}
+                >
+                  Upload Signature Image
+                  <input
+                    type="file"
+                    hidden
+                    accept="image/*"
+                    onChange={handleSignatureUpload}
+                  />
+                </Button>
+              )}
+              <Typography variant="caption" sx={{ display: 'block', mt: 1, color: '#6E6E73' }}>
+                Recommended: PNG or JPG with transparent background
+              </Typography>
+            </Box>
           </Stack>
         </DialogContent>
         <DialogActions>
