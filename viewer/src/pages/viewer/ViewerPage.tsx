@@ -360,6 +360,15 @@ const ViewerPage: React.FC = () => {
               
               </Box>
             </Grid>
+            <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
+              <AIAnalysisButton
+                studyUid={studyInstanceUID || ''}
+                hasAnalysis={hasAiAnalysis}
+                onAnalyze={handleAiAnalyze}
+                onAnalysisComplete={handleAiAnalysisComplete}
+                disabled={!studyInstanceUID}
+              />
+            </Grid>
           </Grid>
             <Box sx={{ width: 350, bgcolor: 'grey.50', borderRight: 1, borderColor: 'divider', display: 'flex', flexDirection: 'column' }}>
             {/* Patient Context Panel */}
