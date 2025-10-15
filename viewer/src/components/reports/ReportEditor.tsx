@@ -376,7 +376,7 @@ const ReportEditor: React.FC<ReportEditorProps> = ({
       {/* Actions */}
       <Paper sx={{ p: 2, mt: 2 }}>
         <Stack direction="row" spacing={2} justifyContent="space-between" alignItems="center">
-          <Box>
+          <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
             {reportSignature && (
               <Chip
                 icon={<DrawIcon />}
@@ -384,6 +384,14 @@ const ReportEditor: React.FC<ReportEditorProps> = ({
                 color="success"
                 size="small"
                 onClick={() => setSignatureDialogOpen(true)}
+              />
+            )}
+            {currentReport && (
+              <ExportButton
+                type="report"
+                data={currentReport}
+                studyInfo={studyInfo}
+                disabled={!currentReport}
               />
             )}
           </Box>
