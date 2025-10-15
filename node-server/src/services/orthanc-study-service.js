@@ -88,9 +88,11 @@ class OrthancStudyService {
       const studyResponse = await this.axiosInstance.get(`/studies/${studyId}`);
       const studyData = studyResponse.data;
 
-      // Get study tags for patient information
-      const tagsResponse = await this.axiosInstance.get(`/studies/${studyId}/simplified-tags`);
-      const tags = tagsResponse.data;
+      // Get study tags for patient information (use data from main study response)
+      const tags = {
+        ...studyData.MainDicomTags,
+        ...studyData.PatientMainDicomTags
+      };
 
       // Count instances in study
       const instancesResponse = await this.axiosInstance.get(`/studies/${studyId}/instances`);
